@@ -26,6 +26,18 @@ COMMERCIAL LICENSING
   For commercial use, white-labelling, or integration into a paid product
   or service, please contact: contact@jklp.io
 
+THIRD-PARTY COMPONENTS
+  The following third-party libraries are included in the css/vendor/ and
+  js/vendor/ directories and are NOT covered by this license. They are
+  distributed under their respective open-source licenses:
+
+    - SAP Fundamental Styles (fd-components.css, sap-72-fonts.css,
+      sap-horizon-tokens.css, 72 font files) — Apache License 2.0
+      https://github.com/SAP/fundamental-styles
+
+    - xz-decompress (xz-decompress.js) — MIT License
+      https://github.com/SteveSanderson/xzwasm
+
 DISCLAIMER
   This software is provided "as is", without warranty of any kind, express
   or implied. The copyright holder shall not be liable for any damages
