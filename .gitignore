@@ -1,8 +1,21 @@
 # Members-only file — not part of public distribution
 js/pdf-export.js
 
+# Members ZIP build script and output — not part of public distribution
+build-members-zip.sh
+dist/
+
 # Test backups — never commit real device configs
 *.dss
+
+# Extracted backup content
+ConfigBkp/
+
+# Screenshots and local images
+*.png
+*.jpg
+*.jpeg
+!img/
 
 # macOS
 .DS_Store
