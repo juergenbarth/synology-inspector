@@ -1,0 +1,36 @@
+/* SAP 72 font-face declarations — font files in css/vendor/fonts/ */
+@font-face {
+    font-family: '72';
+    src: url('fonts/72-Regular.woff2') format('woff2'),
+         local('72');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: '72';
+    src: url('fonts/72-Bold.woff2') format('woff2'),
+         local('72-Bold');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: '72';
+    src: url('fonts/72-Light.woff2') format('woff2'),
+         local('72-Light');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: '72full';
+    src: url('fonts/72-Regular-full.woff2') format('woff2'),
+         local('72full');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}

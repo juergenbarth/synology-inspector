@@ -1,0 +1,238 @@
+/*
+ * print.css — Synology Inspector
+ *
+ * Print stylesheet for the Members PDF export.
+ * Loaded by both public and members versions.
+ * The Export PDF button only appears when pdf-export.js is loaded (members only).
+ */
+
+/* ── PDF report header — hidden on screen, shown in print ───────────────── */
+#pdf-report-header {
+    display: none;
+}
+
+@media print {
+
+    @page {
+        size: A4 portrait;
+        margin: 14mm 18mm 18mm;
+    }
+
+    /* Force colour rendering in print */
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* ── Hide all screen chrome ─────────────────────────────────────────── */
+    .header,
+    #context-bar,
+    .compliance-header,
+    .compliance-status-bar,
+    .finding-toggle,
+    .about-modal-overlay,
+    .about-inline-btn,
+    #fw-ref-popover {
+        display: none !important;
+    }
+
+    /* ── Show report header ─────────────────────────────────────────────── */
+    #pdf-report-header {
+        display: block !important;
+        margin-bottom: 20px;
+        font-family: "72", Arial, Helvetica, sans-serif;
+    }
+
+    /* ── App root — remove all flex/scroll constraints ─────────────────── */
+    html, body {
+        height: auto !important;
+        overflow: visible !important;
+        background: #fff !important;
+    }
+
+    #app,
+    #app > *,
+    .compliance-view,
+    #compliance-view-root {
+        display: block !important;
+        overflow: visible !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: 0 !important;
+        flex: none !important;
+        position: static !important;
+    }
+
+    .findings-scroll-area {
+        overflow: visible !important;
+        height: auto !important;
+        max-height: none !important;
+        min-height: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    /* ── Always show finding detail bodies ──────────────────────────────── */
+    .finding-body { display: block !important; }
+
+    /* ── Page break control ─────────────────────────────────────────────── */
+    .category-group  { break-inside: avoid; }
+    .finding-card    { break-inside: avoid; margin-bottom: 6px; }
+    .passed-section  { break-inside: avoid; }
+    .disclaimer-box  { break-inside: avoid; }
+
+    /* ── Preserve severity stripe colors ────────────────────────────────── */
+    .finding-stripe {
+        background: var(--stripe-color) !important;
+    }
+
+    /* ── Disable interactive hover states ───────────────────────────────── */
+    .finding-header { cursor: default !important; }
+    .fw-tag         { pointer-events: none; }
+
+    /* ── Disclaimer ─────────────────────────────────────────────────────── */
+    .disclaimer-box {
+        border: 1px solid #BDD5F5 !important;
+        background: #EAF3FF !important;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────────
+       Report header styles
+       ──────────────────────────────────────────────────────────────────── */
+
+    .pdf-hdr-top {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 10px;
+    }
+
+    .pdf-hdr-logo {
+        height: 28px;
+        width: auto;
+        flex-shrink: 0;
+    }
+
+    .pdf-hdr-titles {
+        flex: 1;
+    }
+
+    .pdf-hdr-tool {
+        font-size: 16px;
+        font-weight: 700;
+        color: #131e29;
+        display: flex;
+        align-items: baseline;
+        gap: 7px;
+    }
+
+    .pdf-hdr-version {
+        font-size: 9px;
+        font-family: 'Consolas', 'Courier New', monospace;
+        font-weight: 800;
+        color: #0D1B35;
+        background: #FFCC00;
+        border-radius: 3px;
+        padding: 1px 5px;
+        vertical-align: middle;
+    }
+
+    .pdf-hdr-subtitle {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #758ca4;
+        margin-top: 2px;
+    }
+
+    .pdf-hdr-score-block {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .pdf-hdr-grade {
+        font-size: 36px;
+        font-weight: 800;
+        line-height: 1;
+    }
+
+    .pdf-hdr-score-detail {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .pdf-hdr-score-num {
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .pdf-hdr-verdict {
+        font-size: 10px;
+        font-weight: 600;
+    }
+
+    .pdf-hdr-divider {
+        border: none;
+        border-top: 2px solid #0D1B35;
+        margin-bottom: 8px;
+    }
+
+    .pdf-hdr-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 24px;
+        padding: 8px 0;
+        border-bottom: 1px solid #d9d9d9;
+        margin-bottom: 16px;
+    }
+
+    .pdf-hdr-meta-cell {
+        display: flex;
+        gap: 5px;
+        font-size: 11px;
+    }
+
+    .pdf-hdr-meta-label {
+        font-weight: 700;
+        color: #556b82;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .pdf-hdr-meta-value {
+        color: #131e29;
+    }
+
+    /* ── Contact footer ─────────────────────────────────────────────────────── */
+    #pdf-report-footer {
+        margin-top: 20px;
+        padding-top: 10px;
+        border-top: 1px solid #d9d9d9;
+        font-family: "72", Arial, Helvetica, sans-serif;
+    }
+
+    .pdf-ftr-contact {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 10px;
+        color: #556b82;
+    }
+
+    .pdf-ftr-name {
+        font-weight: 700;
+        color: #131e29;
+    }
+
+    .pdf-ftr-sep {
+        color: #c0ccd8;
+    }
+
+    .pdf-ftr-link {
+        color: #1a56a8;
+        text-decoration: none;
+    }
+}

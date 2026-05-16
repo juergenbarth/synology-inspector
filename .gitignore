@@ -1,0 +1,12 @@
+# Members-only file — not part of public distribution
+js/pdf-export.js
+
+# Test backups — never commit real device configs
+*.dss
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+*.swp

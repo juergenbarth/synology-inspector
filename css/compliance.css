@@ -1,0 +1,703 @@
+/*
+ * compliance.css — SAP Fiori Horizon Object Page pattern
+ *
+ * Layout (top to bottom):
+ *
+ *  ┌─ Object Page Header ─────────────────────────────────────────────────────┐
+ *  │  [Arc gauge + grade]  │  [4 KPI tiles]                                   │
+ *  │                       │  [Framework filter chips]                         │
+ *  └──────────────────────────────────────────────────────────────────────────┘
+ *  ┌─ Content Toolbar ─────────────────────────────────────────────────────────┐
+ *  │  N findings  of N total                           [Clear all filters]    │
+ *  └──────────────────────────────────────────────────────────────────────────┘
+ *  ┌─ Findings (scrollable, grouped by category) ──────────────────────────────┐
+ *  │  [Section header — WiFi, 2 issues]                                        │
+ *  │    [Finding card — Fiori Standard List Item style]                        │
+ *  │  [Passed checks section]                                                  │
+ *  └──────────────────────────────────────────────────────────────────────────┘
+ *
+ * Severity palette (SAP Fiori semantic colours):
+ *   Critical  #BB0000  /  High     #E9730C  /  Medium  #E8A000
+ *   Low       #0070F2  /  Pass     #107E3E  /  Info    #6A6D70
+ */
+
+/* ── Outer shell ─────────────────────────────────────────────────────────────── */
+.compliance-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: var(--color-bg-page);
+}
+
+/* ── Object Page Header ──────────────────────────────────────────────────────── */
+/*
+ * Two zones separated by an explicit divider element:
+ *   Left  (.compliance-score-area)   — gauge SVG + grade letter + verdict text
+ *   Right (.compliance-metrics-area) — KPI tiles row + framework filter chips
+ */
+.compliance-header {
+    display: flex;
+    align-items: stretch;
+    background: var(--color-bg-panel);
+    border-bottom: 1px solid var(--color-border-sub);
+    box-shadow: var(--shadow-level1);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+/* Score zone: KPI number + progress bar + grade */
+.compliance-score-area {
+    display: flex;
+    align-items: center;
+    padding: 20px 28px;
+    flex-shrink: 0;
+}
+
+/* Fiori Object Number pattern: large value + unit */
+.score-kpi-block {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.score-kpi-number {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.score-kpi-val {
+    font-size: 56px;
+    font-weight: 700;
+    font-family: var(--font-sans);
+    line-height: 1;
+}
+
+.score-kpi-denom {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--color-text-3);
+    align-self: flex-end;
+    margin-bottom: 8px;
+}
+
+.score-kpi-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 180px;
+}
+
+.score-progress-bar {
+    height: 6px;
+    background: var(--color-border-sub);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.score-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+}
+
+.score-grade-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.score-grade-letter {
+    font-size: 36px;
+    font-weight: 700;
+    font-family: var(--font-sans);
+    line-height: 1;
+}
+
+.score-verdict {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    color: var(--color-text-2);
+}
+
+/* Explicit vertical rule between score area and metrics area */
+.compliance-separator {
+    width: 1px;
+    background: var(--color-border-sub);
+    margin: 16px 0;
+    flex-shrink: 0;
+    align-self: stretch;
+}
+
+/* Metrics zone: KPI tiles + framework chips */
+.compliance-metrics-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    padding: 16px 24px;
+    min-width: 0;
+}
+
+/* ── KPI Tiles ───────────────────────────────────────────────────────────────── */
+/*
+ * SAP Fiori "Numeric Content" tile pattern.
+ * Each tile: large number (top) + label (bottom), coloured border + tint.
+ * Clickable to filter findings by severity.
+ */
+.kpi-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.kpi-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 72px;
+    padding: 10px 16px;
+    border-radius: var(--r-md);
+    border: 1px solid color-mix(in srgb, var(--kpi-color) 25%, transparent);
+    background: color-mix(in srgb, var(--kpi-color) 6%, white);
+    cursor: pointer;
+    transition: background .12s, box-shadow .12s, border-color .12s;
+}
+
+.kpi-tile:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--kpi-color) 14%, white);
+    border-color: var(--kpi-color);
+    box-shadow: var(--shadow-level1);
+}
+
+.kpi-tile--active {
+    background: color-mix(in srgb, var(--kpi-color) 14%, white);
+    border-color: var(--kpi-color);
+    box-shadow: 0 0 0 2px var(--kpi-color);
+}
+
+.kpi-tile--empty {
+    opacity: .4;
+    cursor: default;
+}
+
+.kpi-number {
+    font-family: var(--font-mono);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--kpi-color);
+}
+
+.kpi-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--color-text-3);
+}
+
+/* ── Framework filter chips ──────────────────────────────────────────────────── */
+.fw-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.filter-row-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: var(--color-text-3);
+    width: 76px;
+    flex-shrink: 0;
+}
+
+.fw-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    height: 26px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-strip);
+    color: var(--color-text-2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .12s;
+}
+
+.fw-chip:hover              { color: var(--chip-color); border-color: var(--chip-color); background: var(--color-bg-panel); }
+.fw-chip--active            { color: var(--chip-color); background: color-mix(in srgb, var(--chip-color) 8%, white); border-color: var(--chip-color); box-shadow: 0 0 0 1px var(--chip-color); }
+.fw-chip--issues .fw-chip-count { font-size: 9px; color: var(--chip-color); opacity: .9; }
+.fw-chip--clean .fw-chip-clean  { font-size: 10px; color: var(--color-success); }
+
+.chip-clear-btn {
+    padding: 0 10px;
+    height: 26px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--r-sm);
+    background: none;
+    color: var(--color-text-2);
+    font-size: 12px;
+    cursor: pointer;
+    transition: color .12s, border-color .12s;
+}
+
+.chip-clear-btn:hover { color: var(--color-error); border-color: var(--color-error); }
+
+/* ── Status bar ──────────────────────────────────────────────────────────────── */
+.compliance-status-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 24px;
+    background: var(--color-bg-strip);
+    border-bottom: 1px solid var(--color-border-sub);
+    flex-shrink: 0;
+    font-size: 13px;
+}
+
+.status-bar-count  { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--color-text-1); }
+.status-bar-label  { color: var(--color-text-2); }
+.status-bar-filter { color: var(--color-brand); font-weight: 500; }
+.status-bar-total  { color: var(--color-text-3); }
+
+.status-bar-clear {
+    margin-left: auto;
+    padding: 0 12px;
+    height: 26px;
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--r-sm);
+    color: var(--color-text-2);
+    font-size: 12px;
+    cursor: pointer;
+    transition: border-color .12s, color .12s;
+}
+
+.status-bar-clear:hover { border-color: var(--color-brand); color: var(--color-brand); }
+
+/* ── Findings scroll area ────────────────────────────────────────────────────── */
+.findings-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 24px;
+}
+
+.findings-scroll-area::-webkit-scrollbar       { width: 5px; }
+.findings-scroll-area::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 2px; }
+
+/* ── Category groups ─────────────────────────────────────────────────────────── */
+/*
+ * Fiori "Object Page Section" pattern:
+ *   Section header with category name + issue count, coloured left border.
+ *   Findings stacked below.
+ */
+.category-group { margin-bottom: 20px; }
+
+.category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px 8px 14px;
+    margin-bottom: 6px;
+    background: var(--color-bg-panel);
+    border: 1px solid var(--color-border-sub);
+    border-left: 4px solid var(--cat-color, var(--color-brand));
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    box-shadow: var(--shadow-level1);
+}
+
+.category-header-name {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    color: var(--color-text-1);
+}
+
+.category-header-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-3);
+}
+
+.category-findings {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-left: 4px;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────────── */
+.findings-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 64px 20px;
+    color: var(--color-text-3);
+    text-align: center;
+}
+
+.findings-empty-icon  { font-size: 40px; opacity: .3; }
+.findings-empty-title { font-size: 15px; font-weight: 600; color: var(--color-text-2); }
+.findings-empty-sub   { font-size: 13px; }
+
+/* ── Finding cards ───────────────────────────────────────────────────────────── */
+/*
+ * SAP Fiori "Standard List Item" card pattern:
+ *   – White card with subtle shadow
+ *   – Coloured left stripe = severity indicator (replaces colored left border on List Items)
+ *   – Header row: severity pill + category tag (left) + toggle (right)
+ *   – Title row
+ *   – Meta row: affected count + framework tags
+ *   – Expanded body: description + affected items + remediation
+ */
+.finding-card {
+    display: flex;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    background: var(--color-bg-panel);
+    border: 1px solid var(--color-border-sub);
+    box-shadow: var(--shadow-level1);
+    transition: box-shadow .15s, border-color .15s;
+}
+
+.finding-card:hover { box-shadow: var(--shadow-level2); }
+
+/* 4 px severity stripe on the left edge */
+.finding-stripe {
+    width: 5px;
+    flex-shrink: 0;
+    background: var(--stripe-color, var(--color-border));
+}
+
+.finding-card-content { flex: 1; min-width: 0; }
+
+.finding-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto;
+    gap: 3px 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background .12s;
+}
+
+.finding-header:hover           { background: var(--color-bg-hover); }
+.finding-header--pass           { cursor: default; }
+.finding-header--pass:hover     { background: transparent; }
+
+.finding-header-main {
+    grid-column: 1; grid-row: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.finding-title {
+    grid-column: 1; grid-row: 2;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-1);
+    line-height: 1.45;
+}
+
+.finding-title--pass { color: var(--color-text-2); font-weight: 500; }
+
+.finding-meta {
+    grid-column: 1; grid-row: 3;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.finding-toggle {
+    grid-column: 2; grid-row: 1 / 4;
+    align-self: center;
+    color: var(--color-text-3);
+    font-size: 11px;
+    transition: transform .15s;
+    flex-shrink: 0;
+}
+
+.finding-toggle--open { transform: rotate(90deg); }
+
+/* ── Severity pill — SAP Fiori Object Status ─────────────────────────────────── */
+/*
+ * Object Status is text + optional icon in a semantic colour.
+ * We render it as a small filled pill.
+ */
+.severity-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--r-sm);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    flex-shrink: 0;
+}
+
+.severity-pill--critical { background: var(--sapErrorBackground,   #ffeaf4); color: var(--sapNegativeColor,  #aa0808); }
+.severity-pill--high     { background: var(--sapWarningBackground, #fff8d6); color: var(--sapCriticalColor,  #e76500); }
+.severity-pill--medium   { background: var(--sapWarningBackground, #fff8d6); color: var(--sapCriticalTextColor, #b44f00); }
+.severity-pill--low      { background: var(--sapInformationBackground, #e1f4ff); color: var(--sapHighlightColor, #0064d9); }
+.severity-pill--info     { background: var(--color-bg-strip);               color: var(--color-text-3); }
+.severity-pill--pass     { background: var(--sapSuccessBackground, #f5fae5); color: var(--sapPositiveColor,  #256f3a); }
+
+.finding-category {
+    font-size: 10px;
+    color: var(--color-text-3);
+    text-transform: uppercase;
+    letter-spacing: .4px;
+}
+
+.finding-affected-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-3);
+}
+
+.finding-fw-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+
+.fw-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 1px 6px;
+    border-radius: var(--r-sm);
+    border: 1px solid transparent;
+    background: none;
+    cursor: default;
+    line-height: inherit;
+}
+.fw-tag--clickable {
+    cursor: pointer;
+    transition: filter .1s;
+}
+.fw-tag--clickable:hover { filter: brightness(.88); }
+
+/* ── Framework reference popover ─────────────────────────────────────────────── */
+.fw-ref-popover {
+    position: fixed;
+    z-index: 2000;
+    width: 320px;
+    background: var(--sapList_Background, #fff);
+    border: 1px solid var(--sapList_BorderColor, #e5e5e5);
+    border-radius: var(--r-md, 8px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.13), 0 2px 6px rgba(0,0,0,.07);
+    padding: 12px 14px;
+    pointer-events: none;
+}
+.fw-ref-popover-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--sapContent_NonInteractiveIconColor, #758ca4);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 5px;
+}
+.fw-ref-popover-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--sapTextColor, #131e29);
+    line-height: 1.4;
+    margin-bottom: 7px;
+}
+.fw-ref-popover-body {
+    font-size: 12px;
+    color: var(--sapContent_LabelColor, #556b82);
+    line-height: 1.6;
+}
+
+/* ── Expanded finding body ────────────────────────────────────────────────────── */
+.finding-body {
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--color-border-sub);
+    background: var(--color-bg-strip);
+}
+
+.finding-description {
+    font-size: 13px;
+    color: var(--color-text-2);
+    line-height: 1.65;
+    padding: 12px 0;
+}
+
+.finding-section { margin-top: 12px; }
+
+.finding-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: var(--color-text-3);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.finding-section-count {
+    background: var(--color-bg-panel);
+    border: 1px solid var(--color-border);
+    border-radius: var(--r-pill);
+    padding: 0 6px;
+    font-size: 10px;
+    color: var(--color-text-2);
+}
+
+.finding-affected-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.finding-affected-list li {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-text-2);
+    padding: 5px 10px;
+    background: var(--color-bg-panel);
+    border-radius: var(--r-sm);
+    border: 1px solid var(--color-border-sub);
+    border-left: 3px solid var(--stripe-color, var(--color-border));
+}
+
+/* Remediation section — Fiori "Information" message strip style */
+.finding-section--remediation {
+    background: var(--sapInformationBackground, #e1f4ff);
+    border: 1px solid color-mix(in srgb, var(--sapHighlightColor, #0064d9) 20%, transparent);
+    border-radius: var(--r-md);
+    padding: 10px 14px;
+}
+
+.finding-section--remediation .finding-section-title { color: var(--color-brand); }
+
+.finding-remediation {
+    font-size: 13px;
+    color: var(--color-text-2);
+    line-height: 1.65;
+}
+
+/* ── Passed checks section ───────────────────────────────────────────────────── */
+/*
+ * Fiori "Success" message strip below the findings.
+ * Always visible — no toggle.
+ */
+.passed-section {
+    margin-top: 24px;
+    border-top: 1px solid var(--color-border-sub);
+    padding-top: 14px;
+}
+
+.passed-section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 14px;
+    margin-bottom: 8px;
+    background: var(--sapSuccessBackground, #f5fae5);
+    border: 1px solid color-mix(in srgb, var(--sapPositiveColor, #256f3a) 25%, transparent);
+    border-left: 4px solid var(--color-success);
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    color: var(--color-success);
+}
+
+.passed-count {
+    background: color-mix(in srgb, var(--sapPositiveColor, #256f3a) 12%, transparent);
+    color: var(--color-success);
+    border-radius: var(--r-pill);
+    padding: 1px 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.passed-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-left: 4px;
+}
+
+.compliance-disclaimer {
+    margin: 24px 16px 16px;
+}
+
+.disclaimer-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1px solid #BDD5F5;
+    border-left: 4px solid var(--color-brand);
+    border-radius: var(--r-md);
+    background: #EAF3FF;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #1A4A7A;
+}
+
+.disclaimer-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.disclaimer-icon {
+    flex-shrink: 0;
+    color: var(--color-brand);
+}
+
+.disclaimer-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1A4A7A;
+}
+
+.disclaimer-list {
+    margin: 0 0 0 26px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.7;
+    color: #1A4A7A;
+}
+
+.disclaimer-footer {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1A4A7A;
+    margin: 0;
+}
+
+.drop-zone-disclaimer {
+    width: 480px;
+    max-width: 100%;
+    margin-top: 16px;
+}
