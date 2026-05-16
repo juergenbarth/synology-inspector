@@ -110,6 +110,7 @@
             checkFTPAnonRemediation: 'Disable anonymous FTP access in Control Panel › File Services › FTP › FTP service.',
 
             checkFTPTLSFailTitle: 'FTP Is Operating Without TLS',
+            checkFTPTLSPassTitle: 'FTP Is Using TLS Encryption',
             checkFTPTLSDesc:      'Plain FTP transmits credentials and file content in clear text. Anyone on the network path can intercept passwords and data. Use FTPS (FTP over TLS) or switch to SFTP (SSH File Transfer Protocol) instead.',
             checkFTPTLSRemediation: 'Enable FTPS in Control Panel › File Services › FTP › Enable FTP SSL/TLS encryption.',
 
@@ -303,6 +304,7 @@
             checkFTPAnonRemediation: 'Anonymen FTP-Zugriff deaktivieren: Systemsteuerung › Dateidienste › FTP.',
 
             checkFTPTLSFailTitle: 'FTP läuft ohne TLS',
+            checkFTPTLSPassTitle: 'FTP verwendet TLS-Verschlüsselung',
             checkFTPTLSDesc:      'FTP ohne TLS überträgt Anmeldedaten und Dateiinhalte im Klartext. Jeder auf dem Netzwerkpfad kann Passwörter und Daten mitlesen. FTPS oder SFTP sollte stattdessen verwendet werden.',
             checkFTPTLSRemediation: 'FTPS aktivieren: Systemsteuerung › Dateidienste › FTP › FTP SSL/TLS-Verschlüsselung aktivieren.',
 

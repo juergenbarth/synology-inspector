@@ -89,7 +89,9 @@ function checkProtocols(config, _tlsProfile) {
     }
 
     // ── FTP without TLS ───────────────────────────────────────────────────────
-    const ftpSslOn = config.get('FTP_isEnableSSL') === '1';
+    // FTP_isEnableSSL: '0' = disabled, '1' = optional, '2' = required
+    const ftpSslVal = parseInt(config.get('FTP_isEnableSSL') || '0', 10);
+    const ftpSslOn  = ftpSslVal >= 1;
 
     if (ftpOn && !ftpSslOn) {
         findings.push({
@@ -102,6 +104,18 @@ function checkProtocols(config, _tlsProfile) {
             frameworks:  [fwRef('CIS', '9.2'), fwRef('NIST', 'SC-8'), fwRef('ISO', 'A.8.24')],
             affectedItems: ['FTP (unencrypted)'],
             remediation: t('checkFTPTLSRemediation'),
+        });
+    } else if (ftpOn && ftpSslOn) {
+        findings.push({
+            id:          'syn-ftp-tls-on',
+            title:       t('checkFTPTLSPassTitle'),
+            description: '',
+            severity:    'info',
+            status:      'pass',
+            category:    t('catProtocols'),
+            frameworks:  [fwRef('CIS', '9.2'), fwRef('NIST', 'SC-8'), fwRef('ISO', 'A.8.24')],
+            affectedItems: [],
+            remediation: '',
         });
     }
 
