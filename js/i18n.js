@@ -147,6 +147,8 @@
             issuesCount:             '{0} issues',
             severityPass:            'Pass',
             passedChecks:            'Passed checks',
+            affectedItems:           'Affected items',
+            howToFix:                'How to fix',
 
             // ── About ──────────────────────────────────────────────────────────
             aboutBtn:         'About this tool',
@@ -185,6 +187,8 @@
             issuesCount:             '{0} Probleme',
             severityPass:            'OK',
             passedChecks:            'Bestandene Prüfungen',
+            affectedItems:           'Betroffene Elemente',
+            howToFix:                'So beheben',
 
             // ── About ──────────────────────────────────────────────────────────
             aboutBtn:         'Über dieses Tool',
