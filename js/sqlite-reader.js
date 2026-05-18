@@ -232,3 +232,66 @@ function buildSynoConfigMap(buffer) {
     }
     return map;
 }
+
+/**
+ * Build supplementary data needed by security and best-practice checks.
+ *
+ * Column indices are fixed by the Synology DSM .dss schema:
+ *   confbkp_user_tb:             name(0), uid(1), expire(9)
+ *   confbkp_group_member_list_tb: group_name(0), member_name(1)
+ *   confbkp_scheduler_table:     id(0), json_config(1)
+ *   confbkp_auto_config_backup_table: key(0), value(1)
+ *   confbkp_volume_tb:           vid(0), location(1), fstype(2), mount_point(3)
+ *
+ * Scheduler json_config is double-encoded: outer JSON object, inner values
+ * are themselves JSON strings (e.g. '"SYNO.SDS.TaskScheduler.Recycle"\n').
+ *
+ * @param {ArrayBuffer|Uint8Array} buffer  Raw SQLite 3 database bytes
+ * @returns {{ users, adminMembers, schedulerTasks, autoBackupConfigured, hasBtrfs }}
+ */
+function buildSynoExtras(buffer) {
+    // ── Users ────────────────────────────────────────────────────────────────────
+    // expire: -1 = active (never expires), 1 = disabled/expired
+    const userRows = readSQLiteTable(buffer, 'confbkp_user_tb');
+    const users = userRows
+        .filter(r => typeof r[0] === 'string' && r[0].length > 0)
+        .map(r => ({ name: r[0], uid: Number(r[1]) || 0, expire: Number(r[9]) }));
+
+    // ── Administrators group members ─────────────────────────────────────────────
+    const groupRows   = readSQLiteTable(buffer, 'confbkp_group_member_list_tb');
+    const adminMembers = groupRows
+        .filter(r => r[0] === 'administrators' && typeof r[1] === 'string' && r[1].length > 0)
+        .map(r => r[1]);
+
+    // ── Scheduler tasks ──────────────────────────────────────────────────────────
+    const schedRows      = readSQLiteTable(buffer, 'confbkp_scheduler_table');
+    const schedulerTasks = [];
+    const decodeInner = v => {
+        if (typeof v !== 'string') return '';
+        try { return JSON.parse(v.trim()); } catch (_) { return v.trim(); }
+    };
+    for (const row of schedRows) {
+        if (typeof row[1] !== 'string') continue;
+        try {
+            const outer = JSON.parse(row[1]);
+            schedulerTasks.push({
+                app:   decodeInner(outer['app']),
+                state: decodeInner(outer['state']),
+                name:  decodeInner(outer['name']),
+            });
+        } catch (_) {}
+    }
+
+    // ── Auto config backup ───────────────────────────────────────────────────────
+    // not_set_before = 'true' means backup has NOT been configured yet
+    const backupRows = readSQLiteTable(buffer, 'confbkp_auto_config_backup_table');
+    const backupMap  = new Map(backupRows.map(r => [r[0], r[1]]));
+    const autoBackupConfigured = backupMap.get('not_set_before') !== 'true';
+
+    // ── btrfs volumes ────────────────────────────────────────────────────────────
+    // fstype = 3 → btrfs
+    const volRows  = readSQLiteTable(buffer, 'confbkp_volume_tb');
+    const hasBtrfs = volRows.some(r => Number(r[2]) === 3);
+
+    return { users, adminMembers, schedulerTasks, autoBackupConfigured, hasBtrfs };
+}

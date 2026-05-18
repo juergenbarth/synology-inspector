@@ -73,10 +73,25 @@
             verdictExposure:     'Significant Exposure',
             verdictCritical:     'Critical — Immediate Action Required',
 
+            // ── Tab bar ───────────────────────────────────────────────────────
+            tabSecurity:         'Security Check',
+            tabBestPractices:    'Best Practices',
+
+            // ── Best Practices view ───────────────────────────────────────────
+            bpViewTitle:         'Best Practices Assessment',
+            bpNoIssuesTitle:     'All Best-Practice Checks Passed',
+            bpNoIssuesSub:       'Your configuration follows all recommended best practices.',
+
             // ── Categories ────────────────────────────────────────────────────
             catRemoteAccess:     'Remote Access',
             catProtocols:        'Protocols',
             catAuth:             'Authentication',
+            catUsers:            'User Accounts',
+            catMaintenance:      'Maintenance',
+            catBPSMB:            'SMB Performance',
+            catBPStorage:        'File Services & Storage',
+            catBPUpdates:        'Update Management',
+            catBPScheduler:      'Task Scheduler',
 
             // ── check-remote-access.js ─────────────────────────────────────────
             checkQCFailTitle:    'QuickConnect Is Enabled',
@@ -127,6 +142,86 @@
             checkHSTSDesc:      'Without HSTS, browsers may allow users to bypass TLS certificate warnings or accept downgrade attacks. HSTS instructs browsers to always connect via HTTPS for a defined period.',
             checkHSTSAffected:  'DSM web interface',
             checkHSTSRemediation: 'Enable HSTS in Control Panel › Login Portal › DSM › Enable HTTP Strict Transport Security (HSTS).',
+
+            // ── check-users.js ─────────────────────────────────────────────────
+            checkAdminActiveFailTitle:  'Default Admin Account Is Active',
+            checkAdminActivePassTitle:  'Default Admin Account Is Disabled',
+            checkAdminActiveDesc:       'The built-in "admin" account is active. Synology recommends disabling it and using a named personal account for administration. The default admin name is a predictable brute-force target.',
+            checkAdminActiveRemediation: 'Disable the admin account: Control Panel › User & Group › select "admin" › Edit › Deactivate this account.',
+
+            checkAdminGroupTitle:       'Administrators Group Members',
+            checkAdminGroupDesc:        'The following accounts have administrator privileges. Review this list regularly and ensure only authorised personnel retain admin access. Remove service accounts or any accounts that no longer require elevated privileges.',
+
+            checkPwdPolicyDisabledFailTitle: 'Password Policy Is Not Enforced',
+            checkPwdPolicyDisabledDesc:      'No password strength rules are applied. Users can set arbitrarily simple passwords, making all accounts highly vulnerable to brute-force and credential-stuffing attacks.',
+            checkPwdPolicyDisabledRemediation: 'Enable password strength rules: Control Panel › User & Group › Advanced › Password Settings › Apply password strength rules.',
+
+            checkPwdLengthFailTitle:    'Minimum Password Length Is Below Recommended Threshold',
+            checkPwdLengthPassTitle:    'Minimum Password Length Meets Recommended Threshold',
+            checkPwdLengthDesc:         'The current minimum password length ({0} characters) is below the recommended minimum of 12. Short passwords are significantly easier to crack by brute-force or dictionary attacks.',
+            checkPwdLengthRemediation:  'Increase the minimum password length to at least 12 characters: Control Panel › User & Group › Advanced › Password Settings.',
+
+            checkPwdSpecialFailTitle:   'Password Policy Does Not Require Special Characters',
+            checkPwdSpecialPassTitle:   'Password Policy Requires Special Characters',
+            checkPwdSpecialDesc:        'Requiring at least one special character significantly increases password entropy and resistance to dictionary attacks.',
+            checkPwdSpecialRemediation: 'Enable "Include special characters" in the password strength settings: Control Panel › User & Group › Advanced › Password Settings.',
+
+            checkPwdCommonFailTitle:    'Common Password Check Is Not Enabled',
+            checkPwdCommonPassTitle:    'Common Password Check Is Active',
+            checkPwdCommonDesc:         'Without a common password check, users may set easily-guessable passwords such as "Password1!" that technically meet complexity rules but offer minimal real-world security.',
+            checkPwdCommonRemediation:  'Enable "Exclude commonly used passwords" in the password strength settings: Control Panel › User & Group › Advanced › Password Settings.',
+
+            // ── check-maintenance.js ───────────────────────────────────────────
+            checkConfigBackupFailTitle: 'Automatic Configuration Backup Is Not Configured',
+            checkConfigBackupPassTitle: 'Automatic Configuration Backup Is Configured',
+            checkConfigBackupDesc:      'Without a scheduled configuration backup, a hardware failure, ransomware attack, or misconfiguration could make recovery difficult or impossible. Synology DSM supports automated backups to a local share.',
+            checkConfigBackupRemediation: 'Configure automatic configuration backup: Control Panel › Update & Restore › Configuration Backup › Back Up Configuration.',
+
+            checkSMBSigningFailTitle:   'SMB Signing Is Disabled',
+            checkSMBSigningPassTitle:   'SMB Signing Is Enabled',
+            checkSMBSigningDesc:        'SMB signing ensures that network packets have not been tampered with in transit. Without it, the NAS is vulnerable to NTLM relay attacks and man-in-the-middle attacks against SMB connections, allowing attackers to intercept and modify file traffic.',
+            checkSMBSigningRemediation: 'Enable SMB signing: Control Panel › File Services › SMB › Advanced Settings › Enable SMB signing.',
+
+            // ── check-bestpractices.js ─────────────────────────────────────────
+            bpCheckTransferLogPassTitle:        'SMB Transfer Log Is Disabled',
+            bpCheckTransferLogFailTitle:        'SMB Transfer Log Is Enabled',
+            bpCheckTransferLogDesc:             'Logging every SMB file operation generates significant I/O overhead and disk usage on production servers. Disable transfer logging unless actively required for compliance or troubleshooting.',
+            bpCheckTransferLogRemediation:      'Disable transfer log: Control Panel › File Services › SMB › Advanced Settings › Enable transfer log.',
+
+            bpCheckStrictAllocatePassTitle:     'File Space Pre-allocation Is Disabled',
+            bpCheckStrictAllocateFailTitle:     'File Space Pre-allocation Is Enabled',
+            bpCheckStrictAllocateDesc:          '"Do not reserve disk space when creating files" improves write performance by using sparse file allocation instead of pre-allocating the full file size on disk. Pre-allocation can significantly slow write-heavy workloads.',
+            bpCheckStrictAllocateRemediation:   'Disable strict allocation: Control Panel › File Services › SMB › Advanced Settings › Do not reserve disk space when creating files.',
+
+            bpCheckAIOReadPassTitle:            'Asynchronous SMB Read Is Enabled',
+            bpCheckAIOReadFailTitle:            'Asynchronous SMB Read Is Disabled',
+            bpCheckAIOReadDesc:                 'Asynchronous read (AIO) allows the server to process multiple SMB read requests concurrently, significantly improving throughput for multi-client workloads.',
+            bpCheckAIOReadRemediation:          'Enable async read: Control Panel › File Services › SMB › Advanced Settings › Enable asynchronous read.',
+
+            bpCheckMultichannelPassTitle:       'SMB Multichannel Is Enabled',
+            bpCheckMultichannelFailTitle:       'SMB Multichannel Is Disabled',
+            bpCheckMultichannelDesc:            'SMB3 Multichannel allows clients with multiple network adapters to aggregate all available interfaces simultaneously, dramatically increasing throughput and providing automatic network failover.',
+            bpCheckMultichannelRemediation:     'Enable SMB Multichannel: Control Panel › File Services › SMB › Advanced Settings › Enable SMB3 Multichannel.',
+
+            bpCheckAFPPassTitle:                'AFP Service Is Disabled',
+            bpCheckAFPFailTitle:                'AFP Service Is Enabled',
+            bpCheckAFPDesc:                     'Apple Filing Protocol (AFP) is deprecated and has been removed from macOS Ventura and later. Modern Macs connect via SMB3. Running AFP adds unnecessary attack surface and maintenance overhead without benefit for current Apple clients.',
+            bpCheckAFPRemediation:              'Disable AFP: Control Panel › File Services › AFP › uncheck "Enable AFP service".',
+
+            bpCheckFastClonePassTitle:          'File Fast Clone (Reflink) Is Enabled',
+            bpCheckFastCloneFailTitle:          'File Fast Clone (Reflink) Is Disabled',
+            bpCheckFastCloneDesc:               'Fast Clone uses btrfs reflinks to create instant, space-efficient file copies without duplicating data on disk. This is a major performance feature for virtual machine storage, Docker volumes, and backup workflows.',
+            bpCheckFastCloneRemediation:        'Enable File Fast Clone: Control Panel › File Services › Advanced › Enable file fast clone.',
+
+            bpCheckUpdateNotifyPassTitle:       'DSM Updates Are Set to Notify Only',
+            bpCheckUpdateNotifyFailTitle:       'DSM Updates Are Not Set to Notify Only',
+            bpCheckUpdateNotifyDesc:            'Automatic DSM updates can cause unplanned downtime and introduce incompatibilities with installed packages or running containers. "Notify only" mode ensures you remain in full control of when updates are applied.',
+            bpCheckUpdateNotifyRemediation:     'Change update setting to "Notify me, then let me decide": Control Panel › Update & Restore › DSM Update.',
+
+            bpCheckRecycleTaskPassTitle:        'Recycle Bin Cleanup Task Is Configured',
+            bpCheckRecycleTaskFailTitle:        'No Recycle Bin Cleanup Task Found',
+            bpCheckRecycleTaskDesc:             'Without a scheduled recycle bin cleanup, deleted files accumulate indefinitely. This silently consumes disk space and can trigger unexpected storage alerts on production NAS systems.',
+            bpCheckRecycleTaskRemediation:      'Create a scheduled task to empty the recycle bin: Control Panel › Task Scheduler › Create › Scheduled Task › Recycle Bin.',
 
             // ── Compliance view UI ─────────────────────────────────────────────
             frameworksLabel:         'Frameworks',
@@ -266,10 +361,25 @@
             verdictExposure:     'Erhebliches Risiko',
             verdictCritical:     'Kritisch – Sofortiger Handlungsbedarf',
 
+            // ── Tab bar ───────────────────────────────────────────────────────
+            tabSecurity:         'Sicherheitsprüfung',
+            tabBestPractices:    'Best Practices',
+
+            // ── Best Practices view ───────────────────────────────────────────
+            bpViewTitle:         'Best-Practices-Bewertung',
+            bpNoIssuesTitle:     'Alle Best-Practice-Prüfungen bestanden',
+            bpNoIssuesSub:       'Ihre Konfiguration entspricht allen empfohlenen Best Practices.',
+
             // ── Categories ────────────────────────────────────────────────────
             catRemoteAccess:     'Fernzugriff',
             catProtocols:        'Protokolle',
             catAuth:             'Authentifizierung',
+            catUsers:            'Benutzerkonten',
+            catMaintenance:      'Wartung',
+            catBPSMB:            'SMB-Performance',
+            catBPStorage:        'Dateidienste & Speicher',
+            catBPUpdates:        'Update-Verwaltung',
+            catBPScheduler:      'Aufgabenplaner',
 
             // ── check-remote-access.js ─────────────────────────────────────────
             checkQCFailTitle:    'QuickConnect ist aktiviert',
@@ -320,6 +430,86 @@
             checkHSTSDesc:      'Ohne HSTS können Browser TLS-Zertifikatswarnungen umgehen oder Downgrade-Angriffe akzeptieren. HSTS weist Browser an, für einen definierten Zeitraum ausschließlich HTTPS zu verwenden.',
             checkHSTSAffected:  'DSM-Weboberfläche',
             checkHSTSRemediation: 'HSTS aktivieren: Systemsteuerung › Anmeldeportal › DSM › HTTP Strict Transport Security (HSTS) aktivieren.',
+
+            // ── check-users.js ─────────────────────────────────────────────────
+            checkAdminActiveFailTitle:  'Standard-Admin-Konto ist aktiv',
+            checkAdminActivePassTitle:  'Standard-Admin-Konto ist deaktiviert',
+            checkAdminActiveDesc:       'Das integrierte "admin"-Konto ist aktiv. Synology empfiehlt, es zu deaktivieren und stattdessen ein persönliches benanntes Konto für die Administration zu verwenden. Der standardisierte Kontoname ist ein vorhersehbares Ziel für Brute-Force-Angriffe.',
+            checkAdminActiveRemediation: 'Admin-Konto deaktivieren: Systemsteuerung › Benutzer & Gruppe › "admin" auswählen › Bearbeiten › Dieses Konto deaktivieren.',
+
+            checkAdminGroupTitle:       'Mitglieder der Administratorengruppe',
+            checkAdminGroupDesc:        'Die folgenden Konten haben Administratorrechte. Überprüfen Sie diese Liste regelmäßig und stellen Sie sicher, dass nur autorisierte Personen Adminzugriff haben. Entfernen Sie Dienstkonten und Konten, die keine erhöhten Rechte mehr benötigen.',
+
+            checkPwdPolicyDisabledFailTitle: 'Kennwortrichtlinie ist nicht aktiviert',
+            checkPwdPolicyDisabledDesc:      'Es werden keine Kennwortstärkeregeln angewendet. Benutzer können beliebig einfache Kennwörter setzen, was alle Konten für Brute-Force- und Credential-Stuffing-Angriffe anfällig macht.',
+            checkPwdPolicyDisabledRemediation: 'Kennwortstärkeregeln aktivieren: Systemsteuerung › Benutzer & Gruppe › Erweitert › Kennworteinstellungen › Kennwortstärkeregeln anwenden.',
+
+            checkPwdLengthFailTitle:    'Minimale Kennwortlänge liegt unter dem empfohlenen Schwellenwert',
+            checkPwdLengthPassTitle:    'Minimale Kennwortlänge entspricht dem empfohlenen Schwellenwert',
+            checkPwdLengthDesc:         'Die aktuelle Mindestkennwortlänge ({0} Zeichen) liegt unter dem empfohlenen Minimum von 12. Kurze Kennwörter sind deutlich einfacher durch Brute-Force- oder Wörterbuchangriffe zu knacken.',
+            checkPwdLengthRemediation:  'Mindestkennwortlänge auf mindestens 12 Zeichen erhöhen: Systemsteuerung › Benutzer & Gruppe › Erweitert › Kennworteinstellungen.',
+
+            checkPwdSpecialFailTitle:   'Kennwortrichtlinie erfordert keine Sonderzeichen',
+            checkPwdSpecialPassTitle:   'Kennwortrichtlinie erfordert Sonderzeichen',
+            checkPwdSpecialDesc:        'Die Anforderung mindestens eines Sonderzeichens erhöht die Kennwort-Entropie und die Resistenz gegen Wörterbuchangriffe erheblich.',
+            checkPwdSpecialRemediation: '"Sonderzeichen einschließen" in den Kennwortstärkeeinstellungen aktivieren: Systemsteuerung › Benutzer & Gruppe › Erweitert › Kennworteinstellungen.',
+
+            checkPwdCommonFailTitle:    'Prüfung auf gängige Kennwörter ist nicht aktiviert',
+            checkPwdCommonPassTitle:    'Prüfung auf gängige Kennwörter ist aktiv',
+            checkPwdCommonDesc:         'Ohne Prüfung auf gängige Kennwörter können Benutzer leicht erratbare Kennwörter wie "Passwort1!" setzen, die technisch die Komplexitätsregeln erfüllen, aber in der Praxis kaum Sicherheit bieten.',
+            checkPwdCommonRemediation:  '"Häufig verwendete Kennwörter ausschließen" in den Kennwortstärkeeinstellungen aktivieren: Systemsteuerung › Benutzer & Gruppe › Erweitert › Kennworteinstellungen.',
+
+            // ── check-maintenance.js ───────────────────────────────────────────
+            checkConfigBackupFailTitle: 'Automatische Konfigurationssicherung ist nicht konfiguriert',
+            checkConfigBackupPassTitle: 'Automatische Konfigurationssicherung ist konfiguriert',
+            checkConfigBackupDesc:      'Ohne geplante Konfigurationssicherung kann ein Hardwareausfall, Ransomware-Angriff oder eine Fehlkonfiguration die Wiederherstellung erheblich erschweren oder unmöglich machen. DSM unterstützt automatische Sicherungen auf einer lokalen Freigabe.',
+            checkConfigBackupRemediation: 'Automatische Konfigurationssicherung einrichten: Systemsteuerung › Aktualisierung & Wiederherstellung › Konfigurationssicherung.',
+
+            checkSMBSigningFailTitle:   'SMB-Signierung ist deaktiviert',
+            checkSMBSigningPassTitle:   'SMB-Signierung ist aktiviert',
+            checkSMBSigningDesc:        'SMB-Signierung stellt sicher, dass Netzwerkpakete während der Übertragung nicht manipuliert wurden. Ohne Signierung ist das NAS anfällig für NTLM-Relay-Angriffe und Man-in-the-Middle-Angriffe auf SMB-Verbindungen.',
+            checkSMBSigningRemediation: 'SMB-Signierung aktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › SMB-Signierung aktivieren.',
+
+            // ── check-bestpractices.js ─────────────────────────────────────────
+            bpCheckTransferLogPassTitle:        'SMB Transfer-Log ist deaktiviert',
+            bpCheckTransferLogFailTitle:        'SMB Transfer-Log ist aktiviert',
+            bpCheckTransferLogDesc:             'Das Protokollieren jeder SMB-Dateioperation erzeugt erheblichen I/O-Overhead und Festplattenverbrauch auf Produktionsservern. Deaktivieren Sie Transfer-Logging, sofern es nicht für Compliance oder Fehleranalyse benötigt wird.',
+            bpCheckTransferLogRemediation:      'Transfer-Log deaktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › Transfer-Log aktivieren.',
+
+            bpCheckStrictAllocatePassTitle:     'Speicherplatzvorreservierung ist deaktiviert',
+            bpCheckStrictAllocateFailTitle:     'Speicherplatzvorreservierung ist aktiviert',
+            bpCheckStrictAllocateDesc:          '"Keinen Speicherplatz beim Erstellen von Dateien reservieren" verbessert die Schreibleistung durch Verwendung von Sparse-File-Zuweisung statt Vorab-Allokation der vollen Dateigröße. Vorab-Allokation kann schreibintensive Workloads erheblich verlangsamen.',
+            bpCheckStrictAllocateRemediation:   'Strikte Allokation deaktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › Keinen Speicherplatz beim Erstellen von Dateien reservieren.',
+
+            bpCheckAIOReadPassTitle:            'Asynchrones SMB-Lesen ist aktiviert',
+            bpCheckAIOReadFailTitle:            'Asynchrones SMB-Lesen ist deaktiviert',
+            bpCheckAIOReadDesc:                 'Asynchrones Lesen (AIO) ermöglicht es dem Server, mehrere SMB-Leseanfragen gleichzeitig zu verarbeiten, was den Durchsatz bei Multi-Client-Workloads erheblich verbessert.',
+            bpCheckAIOReadRemediation:          'Asynchrones Lesen aktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › Asynchrones Lesen aktivieren.',
+
+            bpCheckMultichannelPassTitle:       'SMB Multichannel ist aktiviert',
+            bpCheckMultichannelFailTitle:       'SMB Multichannel ist deaktiviert',
+            bpCheckMultichannelDesc:            'SMB3 Multichannel ermöglicht Clients mit mehreren Netzwerkadaptern, alle verfügbaren Schnittstellen gleichzeitig zu nutzen, was den Durchsatz erheblich steigert und automatisches Netzwerk-Failover bietet.',
+            bpCheckMultichannelRemediation:     'SMB Multichannel aktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › SMB3 Multichannel aktivieren.',
+
+            bpCheckAFPPassTitle:                'AFP-Dienst ist deaktiviert',
+            bpCheckAFPFailTitle:                'AFP-Dienst ist aktiviert',
+            bpCheckAFPDesc:                     'Apple Filing Protocol (AFP) ist veraltet und wurde ab macOS Ventura entfernt. Moderne Macs verbinden sich über SMB3. Das Ausführen von AFP erzeugt unnötige Angriffsfläche und Wartungsaufwand ohne Nutzen für aktuelle Apple-Clients.',
+            bpCheckAFPRemediation:              'AFP deaktivieren: Systemsteuerung › Dateidienste › AFP › "AFP-Dienst aktivieren" deaktivieren.',
+
+            bpCheckFastClonePassTitle:          'File Fast Clone (Reflink) ist aktiviert',
+            bpCheckFastCloneFailTitle:          'File Fast Clone (Reflink) ist deaktiviert',
+            bpCheckFastCloneDesc:               'Fast Clone nutzt btrfs-Reflinks, um sofortige, platzsparende Dateikopien ohne Datenduplizierung zu erstellen. Dies ist ein entscheidendes Performance-Feature für VM-Storage, Docker-Volumes und Backup-Workflows.',
+            bpCheckFastCloneRemediation:        'File Fast Clone aktivieren: Systemsteuerung › Dateidienste › Erweitert › Datei-Fast-Clone aktivieren.',
+
+            bpCheckUpdateNotifyPassTitle:       'DSM-Updates sind auf "Nur benachrichtigen" eingestellt',
+            bpCheckUpdateNotifyFailTitle:       'DSM-Updates sind nicht auf "Nur benachrichtigen" eingestellt',
+            bpCheckUpdateNotifyDesc:            'Automatische DSM-Updates können ungeplante Ausfallzeiten verursachen und Inkompatibilitäten mit installierten Paketen oder laufenden Containern einführen. Der Modus "Nur benachrichtigen" stellt sicher, dass Sie die volle Kontrolle behalten.',
+            bpCheckUpdateNotifyRemediation:     'Update-Einstellung ändern: Systemsteuerung › Aktualisierung & Wiederherstellung › DSM-Aktualisierung › "Benachrichtigen und selbst entscheiden".',
+
+            bpCheckRecycleTaskPassTitle:        'Papierkorb-Bereinigungsaufgabe ist konfiguriert',
+            bpCheckRecycleTaskFailTitle:        'Keine Papierkorb-Bereinigungsaufgabe gefunden',
+            bpCheckRecycleTaskDesc:             'Ohne geplante Papierkorbleerung häufen sich gelöschte Dateien unbegrenzt an. Dies verbraucht stillschweigend Festplattenplatz und kann zu unerwarteten Speicheralarmen auf Produktionssystemen führen.',
+            bpCheckRecycleTaskRemediation:      'Geplante Aufgabe zur Papierkorbleerung erstellen: Systemsteuerung › Aufgabenplaner › Erstellen › Geplante Aufgabe › Papierkorb.',
 
         },
     };

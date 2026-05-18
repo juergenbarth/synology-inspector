@@ -27,10 +27,13 @@
  * }
  */
 
-// ── Check registry ─────────────────────────────────────────────────────────────
+// ── Check registries ───────────────────────────────────────────────────────────
 
-/** @type {Array<function(Map, Object): Object[]>} */
+/** @type {Array<function(Map, Object, Object): Object[]>} */
 const COMPLIANCE_CHECKS = [];
+
+/** @type {Array<function(Map, Object, Object): Object[]>} */
+const BEST_PRACTICES_CHECKS = [];
 
 // ── Framework reference builder ────────────────────────────────────────────────
 
@@ -77,15 +80,31 @@ function scoreToVerdict(score) {
     return t('verdictCritical');
 }
 
-// ── Orchestrator ───────────────────────────────────────────────────────────────
+// ── Orchestrators ──────────────────────────────────────────────────────────────
 
 /**
- * Run all registered checks and return a flat array of findings.
+ * Run all security checks and return a flat array of findings.
+ * The parseResult is passed as the optional third argument; existing checks
+ * that only accept (config, tlsProfile) safely ignore it.
  *
  * @param {Map<string,string>} config
  * @param {Object|null}        tlsProfile
+ * @param {Object}             parseResult
  * @returns {Object[]}
  */
-function runAllChecks(config, tlsProfile) {
-    return COMPLIANCE_CHECKS.flatMap(fn => fn(config, tlsProfile));
+function runAllChecks(config, tlsProfile, parseResult) {
+    return COMPLIANCE_CHECKS.flatMap(fn => fn(config, tlsProfile, parseResult));
+}
+
+/**
+ * Run all best-practice checks and return a flat array of findings.
+ * BP findings do NOT affect the security score.
+ *
+ * @param {Map<string,string>} config
+ * @param {Object|null}        tlsProfile
+ * @param {Object}             parseResult
+ * @returns {Object[]}
+ */
+function runAllBestPracticesChecks(config, tlsProfile, parseResult) {
+    return BEST_PRACTICES_CHECKS.flatMap(fn => fn(config, tlsProfile, parseResult));
 }

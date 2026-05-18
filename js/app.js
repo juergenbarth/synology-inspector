@@ -37,9 +37,10 @@ function formatFileSize(bytes) {
 
 // ── App state ─────────────────────────────────────────────────────────────────
 
-let _appPhase     = 'idle';   // 'idle' | 'loading' | 'results' | 'error'
+let _appPhase     = 'idle';       // 'idle' | 'loading' | 'results' | 'error'
 let _parseResult  = null;
 let _errorMessage = '';
+let _activeTab    = 'security';   // 'security' | 'bestpractices'
 
 // ── Main render ────────────────────────────────────────────────────────────────
 
@@ -55,12 +56,28 @@ function renderApp() {
     } else if (_appPhase === 'loading') {
         root.innerHTML = renderLoadingView();
     } else if (_appPhase === 'results' && _parseResult) {
-        const findings = runAllChecks(_parseResult.config, _parseResult.tlsProfile);
-        // Reset compliance filter state on fresh results
+        const secFindings = runAllChecks(_parseResult.config, _parseResult.tlsProfile, _parseResult);
+        const bpFindings  = runAllBestPracticesChecks(_parseResult.config, _parseResult.tlsProfile, _parseResult);
+        // Reset view state on every render (covers language switches and tab switches)
         complianceState.severityFilter  = null;
         complianceState.frameworkFilter = null;
         complianceState.expandedIds.clear();
-        root.innerHTML = `<div class="compliance-view" id="compliance-view-root">${renderComplianceView(findings)}</div>`;
+        bpState.expandedIds.clear();
+        const isSecTab = _activeTab === 'security';
+        root.innerHTML = `
+            <div class="results-shell">
+                <div class="tab-bar">
+                    <button class="tab-btn ${isSecTab ? 'tab-btn--active' : ''}"
+                            onclick="switchTab('security')">${t('tabSecurity')}</button>
+                    <button class="tab-btn ${!isSecTab ? 'tab-btn--active' : ''}"
+                            onclick="switchTab('bestpractices')">${t('tabBestPractices')}</button>
+                </div>
+                ${isSecTab
+                    ? `<div class="compliance-view" id="compliance-view-root">${renderComplianceView(secFindings)}</div>`
+                    : `<div class="bestpractices-view" id="bestpractices-view-root">${renderBestPracticesView(bpFindings)}</div>`
+                }
+            </div>
+        `;
     } else if (_appPhase === 'error') {
         root.innerHTML = renderErrorView(_errorMessage);
     }
@@ -221,6 +238,12 @@ function resetApp() {
     _appPhase     = 'idle';
     _parseResult  = null;
     _errorMessage = '';
+    _activeTab    = 'security';
+    renderApp();
+}
+
+function switchTab(tab) {
+    _activeTab = tab;
     renderApp();
 }
 

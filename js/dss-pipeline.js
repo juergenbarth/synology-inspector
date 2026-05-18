@@ -15,15 +15,20 @@
  * Dependencies (must be loaded before this file):
  *   xz-decompress.js  → window['xz-decompress'].XzReadableStream
  *   tar-parser.js     → parseTar()
- *   sqlite-reader.js  → buildSynoConfigMap()
+ *   sqlite-reader.js  → buildSynoConfigMap(), buildSynoExtras()
  *
  * Returns a Promise<ParseResult> where ParseResult is:
  * {
- *   config:     Map<string, string>   key-value pairs from SQLite
- *   tlsProfile: Object | null         parsed tls_profile/datastore.json
- *   info:       Object                DSM version, model, etc.
- *   fileName:   string
- *   fileSize:   number
+ *   config:               Map<string, string>   key-value pairs from SQLite
+ *   tlsProfile:           Object | null         parsed tls_profile/datastore.json
+ *   info:                 Object                DSM version, model, etc.
+ *   fileName:             string
+ *   fileSize:             number
+ *   users:                Array                 local user accounts { name, uid, expire }
+ *   adminMembers:         string[]              members of the administrators group
+ *   schedulerTasks:       Array                 scheduler tasks { app, state, name }
+ *   autoBackupConfigured: boolean               true if auto config backup is configured
+ *   hasBtrfs:             boolean               true if any volume uses btrfs
  * }
  */
 
@@ -116,8 +121,9 @@ function parseDSSFile(file) {
                     return reject(new Error(t('errNoDb')));
                 }
 
-                // Step 4: parse SQLite config
+                // Step 4: parse SQLite config + supplementary data
                 const config = buildSynoConfigMap(dbEntry.data);
+                const extras = buildSynoExtras(dbEntry.data);
 
                 // Step 5: parse config_info
                 const info = infoEntry ? parseConfigInfo(infoEntry.data) : {};
@@ -137,6 +143,11 @@ function parseDSSFile(file) {
                     info,
                     fileName: file.name,
                     fileSize: file.size,
+                    users:                extras.users,
+                    adminMembers:         extras.adminMembers,
+                    schedulerTasks:       extras.schedulerTasks,
+                    autoBackupConfigured: extras.autoBackupConfigured,
+                    hasBtrfs:             extras.hasBtrfs,
                 });
             } catch (err) {
                 reject(new Error(t('errParse') + ': ' + err.message));

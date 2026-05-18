@@ -21,6 +21,101 @@
  *   Low       #0070F2  /  Pass     #107E3E  /  Info    #6A6D70
  */
 
+/* ── Results shell (wraps tab bar + active view) ─────────────────────────────── */
+.results-shell {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* ── Tab bar ─────────────────────────────────────────────────────────────────── */
+.tab-bar {
+    display: flex;
+    background: var(--color-bg-panel);
+    border-bottom: 2px solid var(--color-border-sub);
+    padding: 0 20px;
+    flex-shrink: 0;
+}
+
+.tab-btn {
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-text-2);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: color .15s, border-color .15s;
+    margin-bottom: -2px;
+    white-space: nowrap;
+}
+
+.tab-btn:hover        { color: var(--color-brand); }
+.tab-btn--active      { color: var(--color-brand); border-bottom-color: var(--color-brand); }
+
+/* ── Best Practices outer shell ──────────────────────────────────────────────── */
+.bestpractices-view {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: var(--color-bg-page);
+}
+
+/* ── Best Practices header ───────────────────────────────────────────────────── */
+.bp-header {
+    display: flex;
+    align-items: center;
+    background: var(--color-bg-panel);
+    border-bottom: 1px solid var(--color-border-sub);
+    box-shadow: var(--shadow-level1);
+    padding: 20px 28px;
+    flex-shrink: 0;
+    gap: 24px;
+}
+
+.bp-header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+}
+
+.bp-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-1);
+    letter-spacing: -.2px;
+}
+
+.bp-subtitle {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+}
+
+.bp-issue-count {
+    font-family: var(--font-mono);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.bp-issue-label {
+    font-size: 13px;
+    color: var(--color-text-3);
+}
+
+/* When inside results-shell, views use flex-grow instead of fixed height */
+.results-shell .compliance-view,
+.results-shell .bestpractices-view {
+    flex: 1;
+    min-height: 0;
+    height: auto;
+}
+
 /* ── Outer shell ─────────────────────────────────────────────────────────────── */
 .compliance-view {
     display: flex;
