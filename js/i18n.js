@@ -89,11 +89,6 @@
             checkTelnetDesc:      'Telnet transmits all data — including credentials — in plain text. Any network observer or man-in-the-middle can intercept passwords and session content. Telnet has been superseded by SSH for all remote shell access.',
             checkTelnetRemediation: 'Disable Telnet in Control Panel › Terminal & SNMP › Terminal.',
 
-            checkSSHPortFailTitle:  'SSH Is Using the Default Port (22)',
-            checkSSHPortPassTitle:  'SSH Is Using a Non-Default Port',
-            checkSSHPortDesc:       'SSH on port 22 is targeted by automated scanners and brute-force bots within minutes of exposure. Moving to a non-standard port significantly reduces automated attack noise, though it does not replace strong authentication.',
-            checkSSHPortRemediation: 'Change the SSH port in Control Panel › Terminal & SNMP › Terminal. Choose a port above 1024 not used by other services.',
-
             // ── check-protocols.js ─────────────────────────────────────────────
             checkSMB1FailTitle:  'SMBv1 Is Allowed',
             checkSMB1PassTitle:  'SMBv1 Is Disabled',
@@ -286,11 +281,6 @@
             checkTelnetPassTitle: 'Telnet ist deaktiviert',
             checkTelnetDesc:      'Telnet überträgt alle Daten einschließlich Anmeldedaten im Klartext. Jeder Netzwerkbeobachter kann Passwörter und Sitzungsinhalte mitlesen. SSH ist der sichere Ersatz für alle Remote-Shell-Zugriffe.',
             checkTelnetRemediation: 'Telnet deaktivieren: Systemsteuerung › Terminal & SNMP › Terminal.',
-
-            checkSSHPortFailTitle:  'SSH verwendet den Standardport (22)',
-            checkSSHPortPassTitle:  'SSH verwendet einen nicht standardmäßigen Port',
-            checkSSHPortDesc:       'SSH auf Port 22 wird von automatisierten Scannern und Brute-Force-Bots innerhalb von Minuten angegriffen. Ein nicht standardmäßiger Port reduziert automatisierte Angriffe deutlich, ersetzt aber keine starke Authentifizierung.',
-            checkSSHPortRemediation: 'SSH-Port ändern: Systemsteuerung › Terminal & SNMP › Terminal. Einen Port über 1024 wählen, der nicht von anderen Diensten belegt ist.',
 
             // ── check-protocols.js ─────────────────────────────────────────────
             checkSMB1FailTitle:  'SMBv1 ist erlaubt',

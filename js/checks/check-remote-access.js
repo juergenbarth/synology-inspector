@@ -71,35 +71,6 @@ function checkRemoteAccess(config, _tlsProfile) {
         });
     }
 
-    // ── SSH on default port ───────────────────────────────────────────────────
-    const sshEnabled = config.get('Terminal_isEnableSSH') === '1';
-    const sshPort    = config.get('Terminal_SSHPort') || '22';
-
-    if (sshEnabled && sshPort === '22') {
-        findings.push({
-            id:          'syn-ssh-default-port',
-            title:       t('checkSSHPortFailTitle'),
-            description: t('checkSSHPortDesc'),
-            severity:    'medium',
-            status:      'fail',
-            category:    t('catRemoteAccess'),
-            frameworks:  [fwRef('CIS', '4.6'), fwRef('NIST', 'CM-7'), fwRef('ISO', 'A.8.20')],
-            affectedItems: [`SSH (port ${sshPort})`],
-            remediation: t('checkSSHPortRemediation'),
-        });
-    } else if (sshEnabled) {
-        findings.push({
-            id:          'syn-ssh-nondefault-port',
-            title:       t('checkSSHPortPassTitle'),
-            description: '',
-            severity:    'info',
-            status:      'pass',
-            category:    t('catRemoteAccess'),
-            frameworks:  [fwRef('CIS', '4.6'), fwRef('NIST', 'CM-7')],
-            affectedItems: [],
-            remediation: '',
-        });
-    }
 
     return findings;
 }
