@@ -99,7 +99,12 @@ let _cachedFindings = null;
 function rerenderCompliance() {
     if (!_cachedFindings) return;
     const el = document.getElementById('compliance-view-root');
-    if (el) el.innerHTML = renderComplianceView(_cachedFindings);
+    if (!el) return;
+    const scrollArea = el.querySelector('.findings-scroll-area');
+    const scrollTop  = scrollArea ? scrollArea.scrollTop : 0;
+    el.innerHTML     = renderComplianceView(_cachedFindings);
+    const newScroll  = el.querySelector('.findings-scroll-area');
+    if (newScroll) newScroll.scrollTop = scrollTop;
 }
 
 // ── FW reference popover ──────────────────────────────────────────────────────

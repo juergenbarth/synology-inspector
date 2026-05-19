@@ -28,7 +28,12 @@ let _cachedBPFindings = null;
 function rerenderBestPractices() {
     if (!_cachedBPFindings) return;
     const el = document.getElementById('bestpractices-view-root');
-    if (el) el.innerHTML = renderBestPracticesView(_cachedBPFindings);
+    if (!el) return;
+    const scrollArea = el.querySelector('.findings-scroll-area');
+    const scrollTop  = scrollArea ? scrollArea.scrollTop : 0;
+    el.innerHTML     = renderBestPracticesView(_cachedBPFindings);
+    const newScroll  = el.querySelector('.findings-scroll-area');
+    if (newScroll) newScroll.scrollTop = scrollTop;
 }
 
 // ── Top-level renderer ────────────────────────────────────────────────────────
