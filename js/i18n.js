@@ -271,7 +271,7 @@
             findingSingular:         'Befund',
             filteredBy:              'gefiltert nach',
             ofTotal:                 'von',
-            noFindingsTitle:         'Keine Befunde gefunden',
+            noFindingsTitle:         'Keine Befunde',
             noFindingsSub:           'Alle Sicherheitsprüfungen bestanden.',
             issueCount:              '1 Befund',
             issuesCount:             '{0} Befunde',
@@ -344,7 +344,7 @@
             labelAffected:       'Betroffen',
             labelRemediation:    'Behebung',
             labelFrameworks:     'Referenzen',
-            labelNoFindings:     'Keine Befunde gefunden.',
+            labelNoFindings:     'Keine Befunde.',
 
             // ── Severity labels ────────────────────────────────────────────────
             severityCritical:    'Kritisch',
