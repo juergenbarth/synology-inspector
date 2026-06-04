@@ -2,7 +2,8 @@
  * check-bestpractices.js
  *
  * Operational best-practice checks (non-security, do NOT affect security score):
- *   SMB:      Transfer Log off, Strict Allocate on, AIO Read on, Multichannel on
+ *   SMB:      Transfer Log off, Strict Allocate on, AIO Read on, Multichannel on,
+ *             Cross-share symlinks off
  *   Services: AFP deprecated
  *   Storage:  Fast Clone (btrfs only)
  *   Updates:  Notify-only setting
@@ -114,6 +115,35 @@ function checkBestPractices(config, _tlsProfile, parseResult) {
         findings.push({
             id:          'bp-smb-multichannel-ok',
             title:       t('bpCheckMultichannelPassTitle'),
+            description: '',
+            severity:    'info',
+            status:      'pass',
+            category:    t('catBPSMB'),
+            frameworks:  [],
+            affectedItems: [],
+            remediation: '',
+        });
+    }
+
+    // ── SMB: Cross-share symlinks ─────────────────────────────────────────────
+    // CIFS_Symlinks: '1' = symlinks may cross share boundaries (path traversal risk)
+    //                '0' or absent = constrained within share (safe)
+    if (config.get('CIFS_Symlinks') === '1') {
+        findings.push({
+            id:          'bp-smb-cross-share-symlinks',
+            title:       t('bpCheckSymlinksFailTitle'),
+            description: t('bpCheckSymlinksDesc'),
+            severity:    'low',
+            status:      'fail',
+            category:    t('catBPSMB'),
+            frameworks:  [],
+            affectedItems: [],
+            remediation: t('bpCheckSymlinksRemediation'),
+        });
+    } else {
+        findings.push({
+            id:          'bp-smb-cross-share-symlinks-ok',
+            title:       t('bpCheckSymlinksPassTitle'),
             description: '',
             severity:    'info',
             status:      'pass',

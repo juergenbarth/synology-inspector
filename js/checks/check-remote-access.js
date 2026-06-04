@@ -2,9 +2,9 @@
  * check-remote-access.js
  *
  * Remote access checks:
- *   1. QuickConnect enabled                    (high)
- *   2. SSH enabled on the default port 22      (medium)
- *   3. Telnet enabled                          (critical)
+ *   1. QuickConnect enabled  (high)
+ *   2. SSH enabled           (medium)
+ *   3. Telnet enabled        (critical)
  */
 
 function checkRemoteAccess(config, _tlsProfile) {
@@ -41,6 +41,36 @@ function checkRemoteAccess(config, _tlsProfile) {
                 remediation: '',
             });
         }
+    }
+
+    // ── SSH ───────────────────────────────────────────────────────────────────
+    // Terminal_isEnableSSH: '1' = enabled. We check presence, not port number.
+    const sshEnabled = config.get('Terminal_isEnableSSH') === '1';
+
+    if (sshEnabled) {
+        findings.push({
+            id:          'syn-ssh-enabled',
+            title:       t('checkSSHFailTitle'),
+            description: t('checkSSHDesc'),
+            severity:    'medium',
+            status:      'fail',
+            category:    t('catRemoteAccess'),
+            frameworks:  [fwRef('CIS', '4.6'), fwRef('NIST', 'CM-7'), fwRef('ISO', 'A.8.20')],
+            affectedItems: ['SSH'],
+            remediation: t('checkSSHRemediation'),
+        });
+    } else {
+        findings.push({
+            id:          'syn-ssh-disabled',
+            title:       t('checkSSHPassTitle'),
+            description: '',
+            severity:    'info',
+            status:      'pass',
+            category:    t('catRemoteAccess'),
+            frameworks:  [fwRef('CIS', '4.6'), fwRef('NIST', 'CM-7')],
+            affectedItems: [],
+            remediation: '',
+        });
     }
 
     // ── Telnet ───────────────────────────────────────────────────────────────

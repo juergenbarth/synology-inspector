@@ -2,18 +2,16 @@
  * check-users.js
  *
  * User account security checks:
- *   1. Default admin account active                     (high)
- *   2. Password policy not enforced                     (high)
- *   3. Password minimum length below 12                 (medium)
- *   4. Password special characters not required         (low)
- *   5. Common password check disabled                   (low)
- *   6. Administrators group members                     (info)
+ *   1. Default admin account active                (high)
+ *   2. Password policy not enforced                (high)
+ *   3. Password minimum length below 12            (medium)
+ *   4. Password special characters not required    (low)
+ *   5. Common password check disabled              (low)
  */
 
 function checkUsers(config, _tlsProfile, parseResult) {
-    const findings    = [];
-    const users       = parseResult?.users       || [];
-    const adminMembers = parseResult?.adminMembers || [];
+    const findings = [];
+    const users    = parseResult?.users || [];
 
     // ── Default admin account disabled ────────────────────────────────────────
     // expire: -1 = active (never expires), 1 = disabled
@@ -145,21 +143,6 @@ function checkUsers(config, _tlsProfile, parseResult) {
                 remediation: '',
             });
         }
-    }
-
-    // ── Administrators group members (always info) ─────────────────────────────
-    if (adminMembers.length > 0) {
-        findings.push({
-            id:          'syn-admin-group-members',
-            title:       t('checkAdminGroupTitle'),
-            description: t('checkAdminGroupDesc'),
-            severity:    'info',
-            status:      'pass',
-            category:    t('catUsers'),
-            frameworks:  [fwRef('CIS', '4.7'), fwRef('NIST', 'AC-2'), fwRef('ISO', 'A.8.3')],
-            affectedItems: adminMembers,
-            remediation: '',
-        });
     }
 
     return findings;

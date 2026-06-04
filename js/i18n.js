@@ -88,6 +88,7 @@
             catAuth:             'Authentication',
             catUsers:            'User Accounts',
             catMaintenance:      'Maintenance',
+            catNetwork:          'Network Security',
             catBPSMB:            'SMB Performance',
             catBPStorage:        'File Services & Storage',
             catBPUpdates:        'Update Management',
@@ -99,10 +100,21 @@
             checkQCDesc:         'QuickConnect routes connections through Synology\'s relay servers, creating a permanent inbound pathway into the NAS that bypasses your network perimeter. Even with port forwarding disabled, QuickConnect exposes management interfaces to the internet.',
             checkQCRemediation:  'Disable QuickConnect in Control Panel › External Access › QuickConnect.',
 
+            checkSSHFailTitle:    'SSH Is Enabled',
+            checkSSHPassTitle:    'SSH Is Disabled',
+            checkSSHDesc:         'SSH exposes a remote shell to the NAS over the network. If not actively required, SSH should be disabled to minimise attack surface. If SSH is needed, restrict access to trusted source addresses using the DSM firewall and enforce key-based authentication.',
+            checkSSHRemediation:  'Disable SSH if not required: Control Panel › Terminal & SNMP › Terminal. If SSH is needed, restrict access via the firewall: Control Panel › Security › Firewall.',
+
             checkTelnetFailTitle: 'Telnet Is Enabled',
             checkTelnetPassTitle: 'Telnet Is Disabled',
             checkTelnetDesc:      'Telnet transmits all data — including credentials — in plain text. Any network observer or man-in-the-middle can intercept passwords and session content. Telnet has been superseded by SSH for all remote shell access.',
             checkTelnetRemediation: 'Disable Telnet in Control Panel › Terminal & SNMP › Terminal.',
+
+            // ── check-network.js ───────────────────────────────────────────────
+            checkDoSFailTitle:       'DoS Protection Is Not Enabled on All Interfaces',
+            checkDoSPassTitle:       'DoS Protection Is Active on All Interfaces',
+            checkDoSDesc:            'DoS (Denial of Service) protection drops malformed and flood packets before they can exhaust system resources. Without it, even simple network floods can degrade NAS responsiveness for legitimate users.',
+            checkDoSRemediation:     'Enable DoS protection: Control Panel › Security › Protection › Enable DoS Protection.',
 
             // ── check-protocols.js ─────────────────────────────────────────────
             checkSMB1FailTitle:  'SMBv1 Is Allowed',
@@ -143,14 +155,30 @@
             checkHSTSAffected:  'DSM web interface',
             checkHSTSRemediation: 'Enable HSTS in Control Panel › Login Portal › DSM › Enable HTTP Strict Transport Security (HSTS).',
 
+            // ── check-websecurity.js ───────────────────────────────────────────
+            checkCSRFFailTitle:  'CSRF Protection Is Not Enabled',
+            checkCSRFPassTitle:  'CSRF Protection Is Active',
+            checkCSRFDesc:       'Cross-Site Request Forgery (CSRF) attacks trick authenticated users into unknowingly executing actions in DSM. Without CSRF protection, an attacker can craft a malicious web page that silently performs administrative actions inside the victim\'s active DSM session.',
+            checkCSRFAffected:   'DSM web interface',
+            checkCSRFRemediation: 'Enable CSRF protection: Control Panel › Security › Security › Improve protection against Cross-Site Request Forgery attacks.',
+
+            checkIFrameFailTitle: 'DSM Can Be Embedded in iFrames',
+            checkIFramePassTitle: 'DSM iFrame Embedding Is Blocked',
+            checkIFrameDesc:      'If DSM can be embedded in an iFrame on a third-party website, attackers can use clickjacking — overlaying an invisible DSM frame to trick users into clicking UI elements without their knowledge.',
+            checkIFrameAffected:  'DSM web interface',
+            checkIFrameRemediation: 'Block iFrame embedding: Control Panel › Security › Security › Do not allow DSM to be embedded in iFrames.',
+
+            checkIPCheckFailTitle: 'Session IP Binding Is Disabled',
+            checkIPCheckPassTitle: 'Session IP Binding Is Active',
+            checkIPCheckDesc:      'When IP binding is disabled, DSM no longer verifies that requests within a session originate from the same IP address as the login. This makes it easier for an attacker who obtains a valid session token to reuse it from a different machine.',
+            checkIPCheckAffected:  'DSM session management',
+            checkIPCheckRemediation: 'Re-enable IP binding: Control Panel › Security › Security › uncheck "Improve browser compatibility by skipping IP checking".',
+
             // ── check-users.js ─────────────────────────────────────────────────
             checkAdminActiveFailTitle:  'Default Admin Account Is Active',
             checkAdminActivePassTitle:  'Default Admin Account Is Disabled',
             checkAdminActiveDesc:       'The built-in "admin" account is active. Synology recommends disabling it and using a named personal account for administration. The default admin name is a predictable brute-force target.',
             checkAdminActiveRemediation: 'Disable the admin account: Control Panel › User & Group › select "admin" › Edit › Deactivate this account.',
-
-            checkAdminGroupTitle:       'Administrators Group Members',
-            checkAdminGroupDesc:        'The following accounts have administrator privileges. Review this list regularly and ensure only authorised personnel retain admin access. Remove service accounts or any accounts that no longer require elevated privileges.',
 
             checkPwdPolicyDisabledFailTitle: 'Password Policy Is Not Enforced',
             checkPwdPolicyDisabledDesc:      'No password strength rules are applied. Users can set arbitrarily simple passwords, making all accounts highly vulnerable to brute-force and credential-stuffing attacks.',
@@ -222,6 +250,11 @@
             bpCheckRecycleTaskFailTitle:        'No Recycle Bin Cleanup Task Found',
             bpCheckRecycleTaskDesc:             'Without a scheduled recycle bin cleanup, deleted files accumulate indefinitely. This silently consumes disk space and can trigger unexpected storage alerts on production NAS systems.',
             bpCheckRecycleTaskRemediation:      'Create a scheduled task to empty the recycle bin: Control Panel › Task Scheduler › Create › Scheduled Task › Recycle Bin.',
+
+            bpCheckSymlinksPassTitle:           'Cross-Share Symlinks Are Disabled',
+            bpCheckSymlinksFailTitle:           'Cross-Share Symlinks Are Enabled',
+            bpCheckSymlinksDesc:                'When cross-share symlinks are enabled, a symbolic link inside one shared folder can point to files in another share — potentially giving SMB users access to data outside their intended scope. Disabling this constrains symlinks to their own share.',
+            bpCheckSymlinksRemediation:         'Disable cross-share symlinks: Control Panel › File Services › SMB › Advanced Settings › Allow symbolic links to cross-share boundaries.',
 
             // ── Compliance view UI ─────────────────────────────────────────────
             frameworksLabel:         'Frameworks',
@@ -376,6 +409,7 @@
             catAuth:             'Authentifizierung',
             catUsers:            'Benutzerkonten',
             catMaintenance:      'Wartung',
+            catNetwork:          'Netzwerksicherheit',
             catBPSMB:            'SMB-Performance',
             catBPStorage:        'Dateidienste & Speicher',
             catBPUpdates:        'Update-Verwaltung',
@@ -387,10 +421,21 @@
             checkQCDesc:         'QuickConnect leitet Verbindungen über die Relay-Server von Synology, wodurch ein dauerhafter eingehender Pfad zum NAS entsteht, der Ihr Netzwerkperimeter umgeht. Auch ohne Port-Weiterleitungen werden Verwaltungsschnittstellen dem Internet zugänglich gemacht.',
             checkQCRemediation:  'QuickConnect deaktivieren: Systemsteuerung › Externer Zugriff › QuickConnect.',
 
+            checkSSHFailTitle:    'SSH ist aktiviert',
+            checkSSHPassTitle:    'SSH ist deaktiviert',
+            checkSSHDesc:         'SSH stellt eine Remote-Kommandozeilenschnittstelle zum NAS bereit. Falls SSH nicht aktiv benötigt wird, sollte es deaktiviert werden, um die Angriffsfläche zu minimieren. Falls SSH erforderlich ist, sollte der Zugriff per Firewall auf vertrauenswürdige Quelladressen beschränkt und schlüsselbasierte Authentifizierung erzwungen werden.',
+            checkSSHRemediation:  'SSH deaktivieren, wenn nicht benötigt: Systemsteuerung › Terminal & SNMP › Terminal. Falls SSH erforderlich ist, Zugriff einschränken: Systemsteuerung › Sicherheit › Firewall.',
+
             checkTelnetFailTitle: 'Telnet ist aktiviert',
             checkTelnetPassTitle: 'Telnet ist deaktiviert',
             checkTelnetDesc:      'Telnet überträgt alle Daten einschließlich Anmeldedaten im Klartext. Jeder Netzwerkbeobachter kann Passwörter und Sitzungsinhalte mitlesen. SSH ist der sichere Ersatz für alle Remote-Shell-Zugriffe.',
             checkTelnetRemediation: 'Telnet deaktivieren: Systemsteuerung › Terminal & SNMP › Terminal.',
+
+            // ── check-network.js ───────────────────────────────────────────────
+            checkDoSFailTitle:       'DoS-Schutz ist nicht auf allen Schnittstellen aktiviert',
+            checkDoSPassTitle:       'DoS-Schutz ist auf allen Schnittstellen aktiv',
+            checkDoSDesc:            'DoS-Schutz (Denial of Service) verwirft fehlerhafte und Flood-Pakete, bevor sie Systemressourcen erschöpfen können. Ohne diesen Schutz können selbst einfache Netzwerkfluten die NAS-Reaktionsfähigkeit für legitime Benutzer beeinträchtigen.',
+            checkDoSRemediation:     'DoS-Schutz aktivieren: Systemsteuerung › Sicherheit › Schutz › DoS-Schutz aktivieren.',
 
             // ── check-protocols.js ─────────────────────────────────────────────
             checkSMB1FailTitle:  'SMBv1 ist erlaubt',
@@ -431,14 +476,30 @@
             checkHSTSAffected:  'DSM-Weboberfläche',
             checkHSTSRemediation: 'HSTS aktivieren: Systemsteuerung › Anmeldeportal › DSM › HTTP Strict Transport Security (HSTS) aktivieren.',
 
+            // ── check-websecurity.js ───────────────────────────────────────────
+            checkCSRFFailTitle:  'CSRF-Schutz ist nicht aktiviert',
+            checkCSRFPassTitle:  'CSRF-Schutz ist aktiv',
+            checkCSRFDesc:       'Cross-Site-Request-Forgery-Angriffe (CSRF) verleiten authentifizierte Benutzer dazu, unwissentlich Aktionen in DSM auszuführen. Ohne CSRF-Schutz kann ein Angreifer eine bösartige Webseite erstellen, die still administrative Aktionen in einer aktiven DSM-Sitzung des Opfers ausführt.',
+            checkCSRFAffected:   'DSM-Weboberfläche',
+            checkCSRFRemediation: 'CSRF-Schutz aktivieren: Systemsteuerung › Sicherheit › Sicherheit › Schutz gegen Cross-Site-Request-Forgery-Attacken verbessern.',
+
+            checkIFrameFailTitle: 'DSM kann in iFrames eingebettet werden',
+            checkIFramePassTitle: 'DSM-iFrame-Einbettung ist blockiert',
+            checkIFrameDesc:      'Wenn DSM auf einer fremden Webseite in einem iFrame eingebettet werden kann, können Angreifer Clickjacking einsetzen — ein unsichtbarer DSM-Frame überlagert die Seite und verleitet Benutzer dazu, unwissentlich UI-Elemente zu klicken.',
+            checkIFrameAffected:  'DSM-Weboberfläche',
+            checkIFrameRemediation: 'iFrame-Einbettung blockieren: Systemsteuerung › Sicherheit › Sicherheit › Nicht zulassen, dass DSM in iFrame eingebettet wird.',
+
+            checkIPCheckFailTitle: 'Sitzungs-IP-Bindung ist deaktiviert',
+            checkIPCheckPassTitle: 'Sitzungs-IP-Bindung ist aktiv',
+            checkIPCheckDesc:      'Wenn die IP-Bindung deaktiviert ist, prüft DSM nicht mehr, ob Anfragen innerhalb einer Sitzung von derselben IP-Adresse wie die Anmeldung stammen. Dies erleichtert es einem Angreifer, der ein gültiges Sitzungstoken erlangt, es von einem anderen Gerät zu verwenden.',
+            checkIPCheckAffected:  'DSM-Sitzungsverwaltung',
+            checkIPCheckRemediation: 'IP-Bindung reaktivieren: Systemsteuerung › Sicherheit › Sicherheit › "Browserkompatibilität durch Verzicht auf IP-Prüfung verbessern" deaktivieren.',
+
             // ── check-users.js ─────────────────────────────────────────────────
             checkAdminActiveFailTitle:  'Standard-Admin-Konto ist aktiv',
             checkAdminActivePassTitle:  'Standard-Admin-Konto ist deaktiviert',
             checkAdminActiveDesc:       'Das integrierte "admin"-Konto ist aktiv. Synology empfiehlt, es zu deaktivieren und stattdessen ein persönliches benanntes Konto für die Administration zu verwenden. Der standardisierte Kontoname ist ein vorhersehbares Ziel für Brute-Force-Angriffe.',
             checkAdminActiveRemediation: 'Admin-Konto deaktivieren: Systemsteuerung › Benutzer & Gruppe › "admin" auswählen › Bearbeiten › Dieses Konto deaktivieren.',
-
-            checkAdminGroupTitle:       'Mitglieder der Administratorengruppe',
-            checkAdminGroupDesc:        'Die folgenden Konten haben Administratorrechte. Überprüfen Sie diese Liste regelmäßig und stellen Sie sicher, dass nur autorisierte Personen Adminzugriff haben. Entfernen Sie Dienstkonten und Konten, die keine erhöhten Rechte mehr benötigen.',
 
             checkPwdPolicyDisabledFailTitle: 'Kennwortrichtlinie ist nicht aktiviert',
             checkPwdPolicyDisabledDesc:      'Es werden keine Kennwortstärkeregeln angewendet. Benutzer können beliebig einfache Kennwörter setzen, was alle Konten für Brute-Force- und Credential-Stuffing-Angriffe anfällig macht.',
@@ -510,6 +571,11 @@
             bpCheckRecycleTaskFailTitle:        'Keine Papierkorb-Bereinigungsaufgabe gefunden',
             bpCheckRecycleTaskDesc:             'Ohne geplante Papierkorbleerung häufen sich gelöschte Dateien unbegrenzt an. Dies verbraucht stillschweigend Festplattenplatz und kann zu unerwarteten Speicheralarmen auf Produktionssystemen führen.',
             bpCheckRecycleTaskRemediation:      'Geplante Aufgabe zur Papierkorbleerung erstellen: Systemsteuerung › Aufgabenplaner › Erstellen › Geplante Aufgabe › Papierkorb.',
+
+            bpCheckSymlinksPassTitle:           'Freigaben-übergreifende Symlinks sind deaktiviert',
+            bpCheckSymlinksFailTitle:           'Freigaben-übergreifende Symlinks sind aktiviert',
+            bpCheckSymlinksDesc:                'Wenn freigaben-übergreifende Symlinks aktiviert sind, kann ein symbolischer Link in einer Freigabe auf Dateien in einer anderen Freigabe zeigen — und SMB-Benutzern damit Zugriff auf Daten außerhalb ihres vorgesehenen Bereichs ermöglichen. Das Deaktivieren beschränkt Symlinks auf ihre eigene Freigabe.',
+            bpCheckSymlinksRemediation:         'Freigaben-übergreifende Symlinks deaktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › Symbolische Links freigabeübergreifend zulassen.',
 
         },
     };
