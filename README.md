@@ -8,7 +8,8 @@ Synology Inspector analyses `.dss` backup files exported from Synology DiskStati
 
 ## Features
 
-- **Security checks** across Remote Access, Protocols, and Authentication
+- **Security checks** across Remote Access, Network, Protocols, Authentication, User Accounts, and Maintenance
+- **Best Practices checks** for SMB performance, file services, updates, and task scheduler
 - **Framework references** — CIS Controls, NIST SP 800-53, ISO 27001, NIS2, PCI DSS
 - **Security score** with letter grade (A–F) and verdict
 - **Filter by severity** — Critical, High, Medium, Low
@@ -55,18 +56,43 @@ DSM 7.0 and later. DSM 6.x is not supported.
 
 ## Security Checks
 
+| Category | Check | Severity |
+|---|---|---|
+| Remote Access | QuickConnect enabled | High |
+| Remote Access | SSH enabled | Medium |
+| Remote Access | Telnet enabled | Critical |
+| Network Security | DoS protection not enabled on all interfaces | Medium |
+| Protocols | SMBv1 allowed | Critical |
+| Protocols | NTLMv1 authentication enabled | High |
+| Protocols | FTP anonymous access enabled | High |
+| Protocols | FTP without TLS | Medium |
+| Authentication | Automatic account blocking not configured | Medium |
+| Authentication | HTTP does not redirect to HTTPS | Medium |
+| Authentication | HSTS not enabled | Low |
+| Authentication | CSRF protection not enabled | Medium |
+| Authentication | DSM can be embedded in iFrames | Medium |
+| Authentication | Session IP binding disabled | Medium |
+| User Accounts | Default admin account active | High |
+| User Accounts | Password policy not enforced | High |
+| User Accounts | Minimum password length below 12 | Medium |
+| User Accounts | Special characters not required | Low |
+| User Accounts | Common password check disabled | Low |
+| Maintenance | Automatic configuration backup not configured | Medium |
+| Maintenance | SMB signing disabled | Medium |
+
+## Best Practice Checks
+
 | Category | Check |
 |---|---|
-| Remote Access | QuickConnect enabled |
-| Remote Access | Telnet enabled |
-| Remote Access | SSH on default port 22 |
-| Protocols | SMBv1 allowed |
-| Protocols | NTLMv1 authentication enabled |
-| Protocols | FTP anonymous access enabled |
-| Protocols | FTP without TLS |
-| Authentication | Automatic account blocking not configured |
-| Authentication | HTTP does not redirect to HTTPS |
-| Authentication | HSTS not enabled |
+| SMB Performance | Transfer log enabled |
+| SMB Performance | File space pre-allocation enabled |
+| SMB Performance | Asynchronous SMB read disabled |
+| SMB Performance | SMB Multichannel disabled |
+| SMB Performance | Cross-share symlinks enabled |
+| File Services & Storage | AFP service enabled (deprecated) |
+| File Services & Storage | File Fast Clone disabled (btrfs only) |
+| Update Management | DSM updates not set to notify-only |
+| Task Scheduler | No recycle bin cleanup task configured |
 
 ---
 
