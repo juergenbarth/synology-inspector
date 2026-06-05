@@ -171,6 +171,7 @@ function renderComplianceView(findings) {
         <div class="findings-scroll-area">
             ${renderFindingsByCategory(visible)}
             ${renderPassedSection(passFindings)}
+            ${renderExcludedChecksSection()}
             ${renderDisclaimer()}
         </div>
     `;
@@ -417,6 +418,24 @@ function renderPassedSection(passFindings) {
             </div>
             <div class="passed-list">${cards}</div>
         </div>
+    `;
+}
+
+// ── Excluded checks ───────────────────────────────────────────────────────────
+
+function renderExcludedChecksSection() {
+    const filterIcon = `<svg class="excluded-checks-icon" width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M2 3h12l-4.5 5.5V13l-3-1.5V8.5L2 3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>`;
+    return `
+        <details class="excluded-checks-section">
+            <summary class="excluded-checks-summary">
+                ${filterIcon}
+                <span>${t('excludedChecksTitle')}</span>
+                <span class="excluded-checks-toggle">▶</span>
+            </summary>
+            <p class="excluded-checks-body">${t('excludedChecksDesc')}</p>
+        </details>
     `;
 }
 

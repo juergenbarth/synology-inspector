@@ -285,6 +285,13 @@
             aboutBadgeOS:     'Source available',
             aboutBadgePrivacy:'No data leaves your browser',
 
+            // ── Excluded checks section ────────────────────────────────────────
+            excludedChecksTitle: 'Deliberately Excluded Checks',
+            excludedChecksDesc:  'Inspector intentionally omits recommendations to move services to non-standard port numbers — such as changing SSH away from port 22 or the DSM web interface away from its default ports. This is Security by Obscurity: it does not reduce the attack surface, adds operational overhead, and creates a false sense of security. Any port scanner finds a service regardless of which port it runs on.',
+
+            // ── About SbO note ─────────────────────────────────────────────────
+            aboutSoBNote: 'Inspector deliberately excludes "Security by Obscurity" checks — such as recommendations to change default port numbers. These add operational overhead without providing real security.',
+
             // ── Disclaimer ─────────────────────────────────────────────────────
             disclaimerTitle:  'Important Notice',
             disclaimerItem1:  'This tool provides automated analysis as technical guidance only and does not replace a professional security audit.',
@@ -324,6 +331,13 @@
             aboutBadgeFree:   'Kostenlos für Privatnutzung',
             aboutBadgeOS:     'Quellcode einsehbar',
             aboutBadgePrivacy:'Keine Daten verlassen Ihren Browser',
+
+            // ── Excluded checks section ────────────────────────────────────────
+            excludedChecksTitle: 'Bewusst ausgeschlossene Prüfungen',
+            excludedChecksDesc:  'Inspector verzichtet bewusst auf Empfehlungen, Dienste auf nicht-standardmäßige Portnummern zu verlegen — z. B. SSH von Port 22 wegzuverlegen oder die DSM-Weboberfläche von ihren Standard-Ports zu ändern. Dies ist Security by Obscurity: Es reduziert die Angriffsfläche nicht, erhöht den Betriebsaufwand und vermittelt ein falsches Sicherheitsgefühl. Jeder Portscanner findet einen Dienst unabhängig davon, auf welchem Port er läuft.',
+
+            // ── About SbO note ─────────────────────────────────────────────────
+            aboutSoBNote: 'Inspector schließt „Security by Obscurity"-Prüfungen bewusst aus — z. B. Empfehlungen, Standard-Portnummern zu ändern. Diese erhöhen den Betriebsaufwand, ohne echten Sicherheitsgewinn zu bringen.',
 
             // ── Disclaimer ─────────────────────────────────────────────────────
             disclaimerTitle:  'Wichtiger Hinweis',

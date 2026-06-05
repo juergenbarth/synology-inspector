@@ -301,6 +301,7 @@ function _renderAboutContent() {
             </div>
         </div>
         <p class="about-desc">${t('aboutDesc')}</p>
+        <p class="about-sob-note">${t('aboutSoBNote')}</p>
         <a class="about-yt-link" href="${YOUTUBE_CHANNEL_URL}" target="_blank" rel="noopener noreferrer">
             ${ytIcon}
             <div class="about-yt-text">

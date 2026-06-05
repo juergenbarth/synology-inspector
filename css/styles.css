@@ -251,7 +251,16 @@ body {
 }
 .about-desc {
     font-size: 13px; color: var(--color-text-2); line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.about-sob-note {
+    font-size: 11.5px; color: var(--color-text-3); line-height: 1.55;
     margin-bottom: 16px;
+    padding: 7px 10px;
+    background: #f3f4f6;
+    border-left: 3px solid #9ca3af;
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
 }
 .about-yt-link {
     display: flex; align-items: center; gap: 12px;
