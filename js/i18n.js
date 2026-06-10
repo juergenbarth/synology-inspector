@@ -197,7 +197,7 @@
             checkPwdCommonFailTitle:    'Common Password Check Is Not Enabled',
             checkPwdCommonPassTitle:    'Common Password Check Is Active',
             checkPwdCommonDesc:         'Without a common password check, users may set easily-guessable passwords such as "Password1!" that technically meet complexity rules but offer minimal real-world security.',
-            checkPwdCommonRemediation:  'Enable "Exclude commonly used passwords" in the password strength settings: Control Panel › User & Group › Advanced › Password Settings.',
+            checkPwdCommonRemediation:  'Control Panel › User & Group › Advanced › Password Settings › enable "Exclude common passwords".',
 
             // ── check-maintenance.js ───────────────────────────────────────────
             checkConfigBackupFailTitle: 'Automatic Configuration Backup Is Not Configured',
@@ -532,7 +532,7 @@
             checkPwdCommonFailTitle:    'Prüfung auf gängige Kennwörter ist nicht aktiviert',
             checkPwdCommonPassTitle:    'Prüfung auf gängige Kennwörter ist aktiv',
             checkPwdCommonDesc:         'Ohne Prüfung auf gängige Kennwörter können Benutzer leicht erratbare Kennwörter wie "Passwort1!" setzen, die technisch die Komplexitätsregeln erfüllen, aber in der Praxis kaum Sicherheit bieten.',
-            checkPwdCommonRemediation:  '"Häufig verwendete Kennwörter ausschließen" in den Kennwortstärkeeinstellungen aktivieren: Systemsteuerung › Benutzer & Gruppe › Erweitert › Kennworteinstellungen.',
+            checkPwdCommonRemediation:  'Systemsteuerung › Benutzer und Gruppe › Erweitert › Passwort-Einstellungen › „Schwache Kennwörter ausschließen" aktivieren.',
 
             // ── check-maintenance.js ───────────────────────────────────────────
             checkConfigBackupFailTitle: 'Automatische Konfigurationssicherung ist nicht konfiguriert',
