@@ -151,9 +151,9 @@
 
             checkHSTSFailTitle: 'HTTP Strict Transport Security (HSTS) Is Not Enabled',
             checkHSTSPassTitle: 'HTTP Strict Transport Security (HSTS) Is Active',
-            checkHSTSDesc:      'Without HSTS, browsers may allow users to bypass TLS certificate warnings or accept downgrade attacks. HSTS instructs browsers to always connect via HTTPS for a defined period.',
+            checkHSTSDesc:      'Without HSTS, browsers may allow users to bypass TLS certificate warnings or accept downgrade attacks. HSTS instructs browsers to always connect via HTTPS for a defined period. Note: in DSM, the HSTS option is only available when a custom domain is configured under Login Portal › Domain. If you access DSM exclusively via IP address, this finding is not applicable.',
             checkHSTSAffected:  'DSM web interface',
-            checkHSTSRemediation: 'Enable HSTS in Control Panel › Login Portal › DSM › Enable HTTP Strict Transport Security (HSTS).',
+            checkHSTSRemediation: 'Prerequisite: configure a custom domain first (Control Panel › Login Portal › Domain tab). Then enable HSTS: Control Panel › Login Portal › DSM tab › Enable HTTP Strict Transport Security (HSTS).',
 
             // ── check-websecurity.js ───────────────────────────────────────────
             checkCSRFFailTitle:  'CSRF Protection Is Not Enabled',
@@ -486,9 +486,9 @@
 
             checkHSTSFailTitle: 'HTTP Strict Transport Security (HSTS) ist nicht aktiviert',
             checkHSTSPassTitle: 'HTTP Strict Transport Security (HSTS) ist aktiv',
-            checkHSTSDesc:      'Ohne HSTS können Browser TLS-Zertifikatswarnungen umgehen oder Downgrade-Angriffe akzeptieren. HSTS weist Browser an, für einen definierten Zeitraum ausschließlich HTTPS zu verwenden.',
+            checkHSTSDesc:      'Ohne HSTS können Browser TLS-Zertifikatswarnungen umgehen oder Downgrade-Angriffe akzeptieren. HSTS weist Browser an, für einen definierten Zeitraum ausschließlich HTTPS zu verwenden. Hinweis: Die HSTS-Option ist in DSM nur verfügbar, wenn unter Anmeldeportal › Domain eine benutzerdefinierte Domain konfiguriert ist. Bei reinem IP-Zugriff auf das NAS ist dieser Befund nicht anwendbar.',
             checkHSTSAffected:  'DSM-Weboberfläche',
-            checkHSTSRemediation: 'HSTS aktivieren: Systemsteuerung › Anmeldeportal › DSM › HTTP Strict Transport Security (HSTS) aktivieren.',
+            checkHSTSRemediation: 'Voraussetzung: zuerst eine benutzerdefinierte Domain einrichten (Systemsteuerung › Anmeldeportal › Reiter Domain). Dann HSTS aktivieren: Systemsteuerung › Anmeldeportal › Reiter DSM › HTTP Strict Transport Security (HSTS) aktivieren.',
 
             // ── check-websecurity.js ───────────────────────────────────────────
             checkCSRFFailTitle:  'CSRF-Schutz ist nicht aktiviert',
