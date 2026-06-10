@@ -208,7 +208,7 @@
             checkSMBSigningFailTitle:   'SMB Signing Is Disabled',
             checkSMBSigningPassTitle:   'SMB Signing Is Enabled',
             checkSMBSigningDesc:        'SMB signing ensures that network packets have not been tampered with in transit. Without it, the NAS is vulnerable to NTLM relay attacks and man-in-the-middle attacks against SMB connections, allowing attackers to intercept and modify file traffic.',
-            checkSMBSigningRemediation: 'Enable SMB signing: Control Panel › File Services › SMB › Advanced Settings › Enable SMB signing.',
+            checkSMBSigningRemediation: 'Enable server-side SMB signing: Control Panel › File Services › SMB › Advanced Settings › General tab › Server signing status → "Force" (recommended) or at minimum "Disable SMB1 signing on".',
 
             // ── check-bestpractices.js ─────────────────────────────────────────
             bpCheckTransferLogPassTitle:        'SMB Transfer Log Is Disabled',
@@ -543,7 +543,7 @@
             checkSMBSigningFailTitle:   'SMB-Signierung ist deaktiviert',
             checkSMBSigningPassTitle:   'SMB-Signierung ist aktiviert',
             checkSMBSigningDesc:        'SMB-Signierung stellt sicher, dass Netzwerkpakete während der Übertragung nicht manipuliert wurden. Ohne Signierung ist das NAS anfällig für NTLM-Relay-Angriffe und Man-in-the-Middle-Angriffe auf SMB-Verbindungen.',
-            checkSMBSigningRemediation: 'SMB-Signierung aktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › SMB-Signierung aktivieren.',
+            checkSMBSigningRemediation: 'Serverseitige SMB-Signierung aktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › Reiter Allgemein › Server-Signierstatus → „Erzwingen" (empfohlen) oder mindestens „SMB1-Signierung deaktivieren ein".',
 
             // ── check-bestpractices.js ─────────────────────────────────────────
             bpCheckTransferLogPassTitle:        'SMB Transfer-Log ist deaktiviert',

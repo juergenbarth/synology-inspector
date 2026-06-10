@@ -38,7 +38,7 @@ function checkMaintenance(config, _tlsProfile, parseResult) {
     }
 
     // ── SMB signing ───────────────────────────────────────────────────────────
-    if (config.get('CIFS_Enable_Server_Signing') !== '1') {
+    if (parseInt(config.get('CIFS_Enable_Server_Signing') ?? '0', 10) < 1) {
         findings.push({
             id:          'syn-smb-no-signing',
             title:       t('checkSMBSigningFailTitle'),
