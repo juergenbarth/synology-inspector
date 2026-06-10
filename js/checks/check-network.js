@@ -23,7 +23,7 @@ function checkNetwork(config, _tlsProfile) {
                 const interfaceName = confFilePath
                     .replace('/etc/fw_security/', '')
                     .replace('.conf', '');
-                if (!iniContent.includes('dos_protect_enable=yes')) {
+                if (!/dos_protect_enable\s*=\s*yes/i.test(iniContent)) {
                     unprotectedInterfaces.push(interfaceName);
                 }
             }
