@@ -15,7 +15,7 @@
         en: {
             // ── UI chrome ────────────────────────────────────────────────────
             appTitle:        'Synology Inspector',
-            appVersion:      'v1.0',
+            appVersion:      'v1.1',
             appSubtitle:     'JKLP CONSULTING · SECURITY AUDIT',
 
             // ── Drop zone ────────────────────────────────────────────────────
@@ -151,9 +151,9 @@
 
             checkHSTSFailTitle: 'HTTP Strict Transport Security (HSTS) Is Not Enabled',
             checkHSTSPassTitle: 'HTTP Strict Transport Security (HSTS) Is Active',
-            checkHSTSDesc:      'Without HSTS, browsers may allow users to bypass TLS certificate warnings or accept downgrade attacks. HSTS instructs browsers to always connect via HTTPS for a defined period. Note: in DSM, the HSTS option is only available when a custom domain is configured under Login Portal › Domain. If you access DSM exclusively via IP address, this finding is not applicable.',
+            checkHSTSDesc:      'Without HSTS, browsers may allow users to bypass TLS certificate warnings or accept downgrade attacks. HSTS instructs browsers to always connect via HTTPS for a defined period. Note: in DSM, the HSTS option may be greyed out if no valid certificate with a custom domain is configured. If you access DSM exclusively via IP address, this finding may not be applicable.',
             checkHSTSAffected:  'DSM web interface',
-            checkHSTSRemediation: 'Prerequisite: configure a custom domain first (Control Panel › Login Portal › Domain tab). Then enable HSTS: Control Panel › Login Portal › DSM tab › Enable HTTP Strict Transport Security (HSTS).',
+            checkHSTSRemediation: 'Control Panel › Login Portal › DSM tab › Enable HTTP Strict Transport Security (HSTS). If the option is greyed out, a valid certificate with a custom domain must be configured first (Control Panel › Security › Certificate).',
 
             // ── check-websecurity.js ───────────────────────────────────────────
             checkCSRFFailTitle:  'CSRF Protection Is Not Enabled',
@@ -254,7 +254,7 @@
             bpCheckSymlinksPassTitle:           'Cross-Share Symlinks Are Disabled',
             bpCheckSymlinksFailTitle:           'Cross-Share Symlinks Are Enabled',
             bpCheckSymlinksDesc:                'When cross-share symlinks are enabled, a symbolic link inside one shared folder can point to files in another share — potentially giving SMB users access to data outside their intended scope. Disabling this constrains symlinks to their own share.',
-            bpCheckSymlinksRemediation:         'Disable cross-share symlinks: Control Panel › File Services › SMB › Advanced Settings › Allow symbolic links to cross-share boundaries.',
+            bpCheckSymlinksRemediation:         'Disable cross-share symlinks: Control Panel › File Services › SMB › Advanced Settings › Others tab › uncheck "Allow symbolic links across shared folders".',
 
             // ── Compliance view UI ─────────────────────────────────────────────
             frameworksLabel:         'Frameworks',
@@ -350,7 +350,7 @@
 
             // ── UI chrome ────────────────────────────────────────────────────
             appTitle:        'Synology Inspector',
-            appVersion:      'v1.0',
+            appVersion:      'v1.1',
             appSubtitle:     'JKLP CONSULTING · SICHERHEITSAUDIT',
 
             // ── Drop zone ────────────────────────────────────────────────────
@@ -486,9 +486,9 @@
 
             checkHSTSFailTitle: 'HTTP Strict Transport Security (HSTS) ist nicht aktiviert',
             checkHSTSPassTitle: 'HTTP Strict Transport Security (HSTS) ist aktiv',
-            checkHSTSDesc:      'Ohne HSTS können Browser TLS-Zertifikatswarnungen umgehen oder Downgrade-Angriffe akzeptieren. HSTS weist Browser an, für einen definierten Zeitraum ausschließlich HTTPS zu verwenden. Hinweis: Die HSTS-Option ist in DSM nur verfügbar, wenn unter Anmeldeportal › Domain eine benutzerdefinierte Domain konfiguriert ist. Bei reinem IP-Zugriff auf das NAS ist dieser Befund nicht anwendbar.',
+            checkHSTSDesc:      'Ohne HSTS können Browser TLS-Zertifikatswarnungen umgehen oder Downgrade-Angriffe akzeptieren. HSTS weist Browser an, für einen definierten Zeitraum ausschließlich HTTPS zu verwenden. Hinweis: Die HSTS-Option ist in DSM ausgegraut, solange kein gültiges Zertifikat mit benutzerdefinierter Domain eingerichtet ist. Bei reinem IP-Zugriff auf das NAS ist dieser Befund möglicherweise nicht anwendbar.',
             checkHSTSAffected:  'DSM-Weboberfläche',
-            checkHSTSRemediation: 'Voraussetzung: zuerst eine benutzerdefinierte Domain einrichten (Systemsteuerung › Anmeldeportal › Reiter Domain). Dann HSTS aktivieren: Systemsteuerung › Anmeldeportal › Reiter DSM › HTTP Strict Transport Security (HSTS) aktivieren.',
+            checkHSTSRemediation: 'Systemsteuerung › Anmeldeportal › DSM-Tab › HTTP Strict Transport Security (HSTS) aktivieren. Ist die Option ausgegraut, muss zunächst ein gültiges Zertifikat mit benutzerdefinierter Domain eingerichtet werden (Systemsteuerung › Sicherheit › Zertifikat).',
 
             // ── check-websecurity.js ───────────────────────────────────────────
             checkCSRFFailTitle:  'CSRF-Schutz ist nicht aktiviert',
@@ -589,7 +589,7 @@
             bpCheckSymlinksPassTitle:           'Freigaben-übergreifende Symlinks sind deaktiviert',
             bpCheckSymlinksFailTitle:           'Freigaben-übergreifende Symlinks sind aktiviert',
             bpCheckSymlinksDesc:                'Wenn freigaben-übergreifende Symlinks aktiviert sind, kann ein symbolischer Link in einer Freigabe auf Dateien in einer anderen Freigabe zeigen — und SMB-Benutzern damit Zugriff auf Daten außerhalb ihres vorgesehenen Bereichs ermöglichen. Das Deaktivieren beschränkt Symlinks auf ihre eigene Freigabe.',
-            bpCheckSymlinksRemediation:         'Freigaben-übergreifende Symlinks deaktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › Symbolische Links freigabeübergreifend zulassen.',
+            bpCheckSymlinksRemediation:         'Freigaben-übergreifende Symlinks deaktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › Reiter „Sonstiges" › Häkchen bei „Symbolische Links für freigegebene Ordner zulassen" entfernen.',
 
         },
     };

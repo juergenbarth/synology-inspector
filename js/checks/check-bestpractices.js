@@ -126,9 +126,10 @@ function checkBestPractices(config, _tlsProfile, parseResult) {
     }
 
     // ── SMB: Cross-share symlinks ─────────────────────────────────────────────
-    // CIFS_Symlinks: '1' = symlinks may cross share boundaries (path traversal risk)
-    //                '0' or absent = constrained within share (safe)
-    if (config.get('CIFS_Symlinks') === '1') {
+    // CIFS_Widelinks: '1' = symlinks may cross share boundaries (path traversal risk)
+    //                 '0' or absent = constrained within share (safe)
+    // CIFS_Symlinks controls symlinks *within* a share (normal, not a risk).
+    if (config.get('CIFS_Widelinks') === '1') {
         findings.push({
             id:          'bp-smb-cross-share-symlinks',
             title:       t('bpCheckSymlinksFailTitle'),

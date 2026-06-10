@@ -23,3 +23,5 @@ ConfigBkp/
 # Editor
 .vscode/
 *.swp
+
+.claude

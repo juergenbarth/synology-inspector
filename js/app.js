@@ -295,7 +295,7 @@ function _renderAboutContent() {
             <div>
                 <div class="about-tool-name">
                     Synology Inspector
-                    <span class="about-tool-version">v1.0</span>
+                    <span class="about-tool-version">v1.1</span>
                 </div>
                 <div class="about-maker">${t('aboutMaker')}</div>
             </div>
