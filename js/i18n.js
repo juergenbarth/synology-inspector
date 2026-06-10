@@ -205,10 +205,10 @@
             checkConfigBackupDesc:      'Without a scheduled configuration backup, a hardware failure, ransomware attack, or misconfiguration could make recovery difficult or impossible. Synology DSM supports automated backups to a local share.',
             checkConfigBackupRemediation: 'Configure automatic configuration backup: Control Panel › Update & Restore › Configuration Backup › Back Up Configuration.',
 
-            checkSMBSigningFailTitle:   'SMB Signing Is Disabled',
-            checkSMBSigningPassTitle:   'SMB Signing Is Enabled',
-            checkSMBSigningDesc:        'SMB signing ensures that network packets have not been tampered with in transit. Without it, the NAS is vulnerable to NTLM relay attacks and man-in-the-middle attacks against SMB connections, allowing attackers to intercept and modify file traffic.',
-            checkSMBSigningRemediation: 'Enable server-side SMB signing: Control Panel › File Services › SMB › Advanced Settings › General tab › Server signing status → "Force" (recommended) or at minimum "Disable SMB1 signing on".',
+            checkSMBSigningFailTitle:   'SMB Server Signing Not Enforced',
+            checkSMBSigningPassTitle:   'SMB Server Signing Enforced (Force)',
+            checkSMBSigningDesc:        'SMB signing ensures that packets cannot be tampered with in transit. "Disable SMB1 signing on" (the default) only auto-negotiates signing — a man-in-the-middle can strip it. Only "Force" actively requires all clients to sign, protecting against NTLM relay attacks. Note: if the NAS is domain-joined, the AD DC must also enforce signing.',
+            checkSMBSigningRemediation: 'Control Panel › File Services › SMB › Advanced Settings › General tab › Server signing status → "Force".',
 
             // ── check-bestpractices.js ─────────────────────────────────────────
             bpCheckTransferLogPassTitle:        'SMB Transfer Log Is Disabled',
@@ -540,10 +540,10 @@
             checkConfigBackupDesc:      'Ohne geplante Konfigurationssicherung kann ein Hardwareausfall, Ransomware-Angriff oder eine Fehlkonfiguration die Wiederherstellung erheblich erschweren oder unmöglich machen. DSM unterstützt automatische Sicherungen auf einer lokalen Freigabe.',
             checkConfigBackupRemediation: 'Automatische Konfigurationssicherung einrichten: Systemsteuerung › Aktualisierung & Wiederherstellung › Konfigurationssicherung.',
 
-            checkSMBSigningFailTitle:   'SMB-Signierung ist deaktiviert',
-            checkSMBSigningPassTitle:   'SMB-Signierung ist aktiviert',
-            checkSMBSigningDesc:        'SMB-Signierung stellt sicher, dass Netzwerkpakete während der Übertragung nicht manipuliert wurden. Ohne Signierung ist das NAS anfällig für NTLM-Relay-Angriffe und Man-in-the-Middle-Angriffe auf SMB-Verbindungen.',
-            checkSMBSigningRemediation: 'Serverseitige SMB-Signierung aktivieren: Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › Reiter Allgemein › Server-Signierstatus → „Erzwingen" (empfohlen) oder mindestens „SMB1-Signierung deaktivieren ein".',
+            checkSMBSigningFailTitle:   'SMB-Serversignatur nicht erzwungen',
+            checkSMBSigningPassTitle:   'SMB-Serversignatur erzwungen (Force)',
+            checkSMBSigningDesc:        'SMB-Signierung verhindert die Manipulation von Paketen während der Übertragung. Die Option „SMB1-Signierung deaktivieren ein" (Standard) verhandelt Signierung nur automatisch — ein Angreifer kann sie wegstreichen. Nur „Erzwingen" schreibt Signierung für alle Clients vor und schützt so vor NTLM-Relay-Angriffen. Hinweis: Bei domänengebundenem NAS muss auch der AD DC Signierung erzwingen.',
+            checkSMBSigningRemediation: 'Systemsteuerung › Dateidienste › SMB › Erweiterte Einstellungen › Reiter Allgemein › Server-Signierstatus → „Erzwingen".',
 
             // ── check-bestpractices.js ─────────────────────────────────────────
             bpCheckTransferLogPassTitle:        'SMB Transfer-Log ist deaktiviert',

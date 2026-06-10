@@ -38,7 +38,11 @@ function checkMaintenance(config, _tlsProfile, parseResult) {
     }
 
     // ── SMB signing ───────────────────────────────────────────────────────────
-    if (parseInt(config.get('CIFS_Enable_Server_Signing') ?? '0', 10) < 1) {
+    // CIFS_Enable_Server_Signing values (confirmed via live DSM backup + Synology Security Advisor):
+    //   undefined/'0' = "Client defined" or "Disable SMB1 signing on" → auto-negotiate, not enforced → FAIL
+    //   '1'           = "Force" → signing required for all connections → PASS
+    // Synology Security Advisor flags value '0' as medium-severity ("Domain-Serversignatur ist deaktiviert").
+    if (config.get('CIFS_Enable_Server_Signing') !== '1') {
         findings.push({
             id:          'syn-smb-no-signing',
             title:       t('checkSMBSigningFailTitle'),
